@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1-initial-creation" author="tobkir">
+        <createTable tableName="modbus_values">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="BATTERYCHARGINGSTATE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONSUMPTIONFROMBATTERY" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONSUMPTIONFROMGRID" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONSUMPTIONFROMPV" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTUALPVPOWER" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

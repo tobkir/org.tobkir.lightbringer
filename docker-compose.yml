@@ -1,0 +1,53 @@
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: docker-public.sachner.de/sachner/postgresql:16
+    volumes:
+      - /var/lib/postgresql/postgres-lokal:/var/lib/postgresql/data
+      - /private-backup/postgresql/postgres-lokal-backup:/var/lib/postgresql/backup
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: master
+      POSTGRES_USER: master
+      PGUSER: master
+      PGPASSWORD: xyz
+      POSTGRES_PASSWORD: xyz
+      POSTGRES_INITDB_ARGS: '--data-checksums --text-search-config=german --auth=password'
+      POSTGRES_HOST_AUTH_METHOD: password
+      LANG: 'de_DE.utf8'
+      TZ: 'Europe/Berlin'
+    networks:
+      - local_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U master"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  lightbringer:
+    container_name: lightbringer
+    restart: always
+    image: lightbringer:latest
+    ports:
+      - "8080:8080"
+      - "4200:4200"
+    environment:
+      #jdbc
+      QUARKUS_DATASOURCE_JDBC_DB_KIND: postgresql
+      QUARKUS_DATASOURCE_JDBC_POOLING_ENABLED: false
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres/lightbringer_db
+      QUARKUS_DATASOURCE_USERNAME: lightbringer_db
+      QUARKUS_DATASOURCE_PASSWORD: xyz
+      QUARKUS_LIQUIBASE_MIGRATE-AT-START: true
+
+      LIGHTBRINGER_PLANT_IP: 192.168.178.51
+      LIGHTBRINGER_PLANT_PORT: 1502
+    networks:
+      - local_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+networks:
+  local_network:
+    driver: bridge
