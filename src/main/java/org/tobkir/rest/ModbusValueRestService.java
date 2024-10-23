@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.tobkir.logic.services.ModbusValueService;
 import org.tobkir.model.ModbusValueEntity;
+import org.tobkir.rest.logic.DateParserRestHelper;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -19,14 +20,13 @@ import java.util.List;
 @RequestScoped
 public class ModbusValueRestService {
 
-    static final DateTimeFormatter formatter
-            = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss SSS");
-
     private final ModbusValueService modbusValueService;
+    private final DateParserRestHelper dateParserRestHelper;
 
     @Inject
-    public ModbusValueRestService(ModbusValueService modbusValueService) {
+    public ModbusValueRestService(ModbusValueService modbusValueService, DateParserRestHelper dateParserRestHelper) {
         this.modbusValueService = modbusValueService;
+        this.dateParserRestHelper = dateParserRestHelper;
     }
 
     @GET
@@ -36,8 +36,13 @@ public class ModbusValueRestService {
 
     @GET
     @Path("/battery-charging-states")
-    public List<Integer> getAllBatteryChargingStates() {
-        return modbusValueService.getAllBatteryChargingStates();
+    public Response getAllBatteryChargingStates(
+            @QueryParam("start") String startString,
+            @QueryParam("end") String endString
+    ) {
+        ZonedDateTime start = dateParserRestHelper.parseQueryParamStringToZDT(startString);
+        ZonedDateTime end = dateParserRestHelper.parseQueryParamStringToZDT(endString);
+        return Response.ok(modbusValueService.getAllBatteryChargingStates(start, end)).build();
     }
 
     @GET
@@ -59,9 +64,14 @@ public class ModbusValueRestService {
     }
 
     @GET
-    @Path("/actual-pv-power")
-    public List<Float> getAllActualPVPower() {
-        return modbusValueService.getAllActualPVPower();
+    @Path("/all-pv-power")
+    public Response getAllActualPVPower(
+            @QueryParam("start") String startString,
+            @QueryParam("end") String endString
+    ) {
+        ZonedDateTime start = dateParserRestHelper.parseQueryParamStringToZDT(startString);
+        ZonedDateTime end = dateParserRestHelper.parseQueryParamStringToZDT(endString);
+        return Response.ok(modbusValueService.getAllActualPVPower(start, end)).build();
     }
 
     @POST
@@ -75,8 +85,8 @@ public class ModbusValueRestService {
             @QueryParam("start") String startString,
             @QueryParam("end") String endString
     ) {
-        ZonedDateTime start = ZonedDateTime.parse(startString, formatter.withZone(ZoneId.systemDefault()));
-        ZonedDateTime end = ZonedDateTime.parse(endString, formatter.withZone(ZoneId.systemDefault()));
+        ZonedDateTime start = dateParserRestHelper.parseQueryParamStringToZDT(startString);
+        ZonedDateTime end = dateParserRestHelper.parseQueryParamStringToZDT(endString);
         return modbusValueService.getModbusValuesByTimeRange(start, end);
     }
 

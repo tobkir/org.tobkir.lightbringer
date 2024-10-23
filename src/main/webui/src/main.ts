@@ -1,4 +1,4 @@
-import { importProvidersFrom} from '@angular/core';
+import {importProvidersFrom} from '@angular/core';
 
 import {AppComponent} from './app/app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -7,14 +7,14 @@ import {AppRoutingModule} from './app/app-routing.module';
 import {bootstrapApplication, BrowserModule} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, BrowserAnimationsModule, AppRoutingModule, FormsModule, ReactiveFormsModule, NgxChartsModule, NgbModule),
+    importProvidersFrom(BrowserModule, BrowserAnimationsModule, AppRoutingModule, FormsModule, ReactiveFormsModule, NgxChartsModule),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations()
+    provideAnimations(), provideAnimationsAsync()
   ]
 })
   .catch(err => console.error(err));

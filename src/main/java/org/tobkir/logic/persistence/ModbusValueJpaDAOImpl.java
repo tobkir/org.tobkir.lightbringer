@@ -1,12 +1,15 @@
 package org.tobkir.logic.persistence;
 
 
+import org.tobkir.model.BatteryState;
 import org.tobkir.model.ModbusValueEntity;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.tobkir.model.PvPowerState;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -23,8 +26,10 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
     }
 
     @Override
-    public List<Integer> findAllBatteryChargingStates() {
-        return em.createQuery("SELECT m.batteryChargingState FROM ModbusValueEntity m", Integer.class)
+    public List<BatteryState> findAllBatteryChargingStates(ZonedDateTime start, ZonedDateTime end) {
+        return em.createQuery("SELECT m.batteryChargingState, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", BatteryState.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getResultList();
     }
 
@@ -47,8 +52,10 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
     }
 
     @Override
-    public List<Float> findAllActualPVPower() {
-        return em.createQuery("SELECT m.actualPVPower FROM ModbusValueEntity m", Float.class)
+    public List<PvPowerState> findAllActualPVPower(ZonedDateTime start, ZonedDateTime end) {
+        return em.createQuery("SELECT m.actualPVPower, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", PvPowerState.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getResultList();
     }
 
