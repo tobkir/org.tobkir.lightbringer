@@ -58,6 +58,8 @@ public class ModbusReaderService {
             values.setConsumptionFromPV(readConsumptionFromPV());
             values.setConsumptionFromGrid(readConsumptionFromGrid());
             values.setBatteryChargingPower(-readBatteryChargingPowerCurrent());
+            logger.info(String.valueOf(-readBatteryChargingPowerCurrent()));
+            logger.info("ChargingPower: {}", values.getBatteryChargingPower());
             return values;
 
         } catch (ExecutionException | InterruptedException e) {

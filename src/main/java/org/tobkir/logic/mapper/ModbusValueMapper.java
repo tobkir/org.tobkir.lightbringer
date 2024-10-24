@@ -19,6 +19,7 @@ public class ModbusValueMapper {
         }
         ModbusValueEntity entity = new ModbusValueEntity();
         entity.setBatteryChargingState(container.getBatteryChargingState());
+        entity.setBatteryChargingPower(container.getBatteryChargingPower());
         entity.setConsumptionFromBattery(container.getConsumptionFromBattery());
         entity.setConsumptionFromGrid(container.getConsumptionFromGrid());
         entity.setConsumptionFromPV(container.getConsumptionFromPV());
@@ -44,6 +45,7 @@ public class ModbusValueMapper {
         container.setConsumptionFromPV(entity.getConsumptionFromPV());
         container.setActualPVPower(entity.getActualPVPower());
         container.setTimestamp(entity.getTimestamp());
+        entity.setBatteryChargingPower(container.getBatteryChargingPower());
         return container;
     }
 }

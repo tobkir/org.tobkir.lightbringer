@@ -1,6 +1,13 @@
 export class ModbusValueContainer {
+  get batteryChargingPower(): number {
+    return this._batteryChargingPower;
+  }
 
+  set batteryChargingPower(value: number) {
+    this._batteryChargingPower = value;
+  }
   private _batteryChargingState: number;
+  private _batteryChargingPower: number;
   private _consumptionFromBattery: number;
   private _consumptionFromGrid: number;
   private _consumptionFromPV: number;
@@ -8,6 +15,7 @@ export class ModbusValueContainer {
   private _timestamp: Date;
 
   constructor() {
+    this._batteryChargingPower = 0;
     this._batteryChargingState = 0; // Standardwert, falls nicht gesetzt
     this._consumptionFromBattery = 0.0;
     this._consumptionFromGrid = 0.0;

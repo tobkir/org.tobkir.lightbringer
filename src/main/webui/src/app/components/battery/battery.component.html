@@ -1,20 +1,23 @@
-<div class="container" style="text-align:center; min-height: 80vh">
-  <div fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex="80%" fxLayout="column" fxLayoutGap="16px">
+<div class="container" style="height: 60vh; width: 80vw">
+  <div fxLayout="row">
+    <div fxFlex="75%" fxLayout="column" fxLayoutGap="16px">
       <div fxLayout="row" fxLayoutGap="16px">
         <div fxFlex="50%">
           <mat-card>
-            <mat-card-title><mat-icon>battery_full</mat-icon> Akkustand</mat-card-title>
+            <mat-card-title>
+              <mat-icon>battery_full</mat-icon>
+              Akkustand
+            </mat-card-title>
             <mat-card-content>
               <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
               <ngx-charts-area-chart
                 *ngIf="values.length >=1"
-                [scheme]="colorScheme"
+                [scheme]="stateColorScheme"
                 [legend]="legend"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxis]="xAxis"
                 [yAxis]="yAxis"
-                [yAxisLabel]="yAxisLabel"
+                [yAxisLabel]="yAxisStateLabel"
                 [timeline]="timeline"
                 [results]="values"
                 [activeEntries]="values"
@@ -29,17 +32,20 @@
         </div>
         <div fxFlex="50%">
           <mat-card>
-            <mat-card-title><mat-icon>battery_charging_full</mat-icon> Ladeleistung</mat-card-title>
+            <mat-card-title>
+              <mat-icon>battery_charging_full</mat-icon>
+              Ladeleistung
+            </mat-card-title>
             <mat-card-content>
               <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
               <ngx-charts-area-chart
                 *ngIf="batteryChargingPowerValues.length >=1"
-                [scheme]="colorScheme"
+                [scheme]="powerColorScheme"
                 [legend]="legend"
                 [showYAxisLabel]="showYAxisLabel"
                 [xAxis]="xAxis"
                 [yAxis]="yAxis"
-                [yAxisLabel]="yAxisLabel"
+                [yAxisLabel]="yAxisPowerLabel"
                 [timeline]="timeline"
                 [results]="batteryChargingPowerValues"
                 [activeEntries]="batteryChargingPowerValues"
@@ -55,4 +61,13 @@
       </div>
     </div>
   </div>
+</div>
+<div class="container" style="height: 25vh; width: 80vw">
+  <mat-spinner *ngIf="latestValue.length < 1" mode="indeterminate"></mat-spinner>
+
+  <ngx-charts-number-card *ngIf="latestValue.length > 0"
+                          [results]="latestValue"
+                          [scheme]="powerColorScheme"
+                          [cardColor]="cardColor">
+  </ngx-charts-number-card>
 </div>

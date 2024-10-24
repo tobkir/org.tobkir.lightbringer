@@ -9,6 +9,7 @@ import org.tobkir.logic.services.ModbusValueService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.tobkir.model.ModbusValueEntity;
 
 @ApplicationScoped
 public class ModbusScheduler {
@@ -30,7 +31,9 @@ public class ModbusScheduler {
     public void scheduledReadValues() {
         try {
             logger.info("Reading Modbus.");
-            modbusValueService.saveModbusValue(mapper.toEntity(modbusReaderService.readValuesContainer()));
+            ModbusValueEntity actual = modbusValueService.saveModbusValue(mapper.toEntity(modbusReaderService.readValuesContainer()));
+            logger.info("Actual Value: ");
+            logger.info(actual.toString());
             logger.info("Modbus values successfully read and processed.");
         } catch (RuntimeException e) {
             logger.info("Error reading Modbus values: {}", e.getMessage());

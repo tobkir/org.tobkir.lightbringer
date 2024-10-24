@@ -32,7 +32,7 @@
     </changeSet>
     <changeSet id="2-add-Battery-Charging-Power" author="tobkir">
         <addColumn tableName="modbus_values">
-            <column name="BATTERYCHARGINGPOWER" type="SMALLINT"/>
+            <column name="BATTERYCHARGINGPOWER" type="INT"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

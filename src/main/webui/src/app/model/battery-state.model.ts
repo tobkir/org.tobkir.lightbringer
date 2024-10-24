@@ -1,14 +1,16 @@
+import {timestamp} from "rxjs";
+
 export class BatteryState {
-
-
   private _batteryChargingState: number;
-  private _batteryChargingPowerState: number;
+  private _batteryConsumption: number;
+  private _batteryChargingPower: number;
   private _timestamp: Date;
 
 
-  constructor(batteryChargingState: number, batteryChargingPowerState: number, timestamp: Date) {
+  constructor(batteryChargingState: number, batteryChargingPower: number, batteryConsumption:number, timestamp: Date) {
     this._batteryChargingState = batteryChargingState;
-    this._batteryChargingPowerState = batteryChargingPowerState;
+    this._batteryConsumption = batteryConsumption;
+    this._batteryChargingPower = batteryChargingPower;
     this._timestamp = timestamp;
   }
 
@@ -29,12 +31,19 @@ export class BatteryState {
     this._timestamp = value;
   }
 
-  get batteryChargingPowerState(): number {
-    return this._batteryChargingPowerState;
+  get batteryChargingPower(): number {
+    return this._batteryChargingPower;
   }
 
-  set batteryChargingPowerState(value: number) {
-    this._batteryChargingPowerState = value;
+  set batteryChargingPower(value: number) {
+    this._batteryChargingPower = value;
   }
 
+  get batteryConsumption(): number {
+    return this._batteryConsumption;
+  }
+
+  set batteryConsumption(value: number) {
+    this._batteryConsumption = value;
+  }
 }

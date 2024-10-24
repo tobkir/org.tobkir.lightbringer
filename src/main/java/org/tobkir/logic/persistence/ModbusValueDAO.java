@@ -18,7 +18,7 @@ public interface ModbusValueDAO {
     List<PvConsumptionState> findAllConsumptionFromPV(ZonedDateTime start, ZonedDateTime end);
     List<PvPowerState> findAllActualPVPower(ZonedDateTime start, ZonedDateTime end);
 
-    void save(ModbusValueEntity entity);
+    ModbusValueEntity save(ModbusValueEntity entity);
 
     List<ModbusValueEntity> findByTimeRange(ZonedDateTime start, ZonedDateTime end);
     ModbusValueEntity findLatest();
