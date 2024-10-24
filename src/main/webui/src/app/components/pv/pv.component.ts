@@ -51,7 +51,7 @@ export class PvComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setPowerValues();
-    //this.setConsumptionValues();
+    this.setConsumptionValues();
     this.requestInterval = setInterval(this.setPowerValues.bind(this), 30000);
     this.consumptionInterval = setInterval(this.setConsumptionValues.bind(this), 30000);
   }
@@ -73,7 +73,6 @@ export class PvComponent implements OnInit, OnDestroy {
       this.values.push(
         {name: "PV Leistung", series: [...series]}
       );
-      this.setConsumptionValues(start, end)
     });
   }
   setConsumptionValues = (start?: Date, end?: Date) => {

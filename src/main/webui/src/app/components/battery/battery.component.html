@@ -1,19 +1,58 @@
-<div style="min-height: 80vh">
-  <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
-  <ngx-charts-area-chart
-    *ngIf="values.length >=1"
-    [scheme]="colorScheme"
-    [legend]="legend"
-    [showYAxisLabel]="showYAxisLabel"
-    [xAxis]="xAxis"
-    [yAxis]="yAxis"
-    [yAxisLabel]="yAxisLabel"
-    [timeline]="timeline"
-    [results]="values"
-    [activeEntries]="values"
-    (select)="onSelect($event)"
-    (activate)="onActivate($event)"
-    (deactivate)="onDeactivate($event)"
-  >
-  </ngx-charts-area-chart>
+<div class="container" style="text-align:center; min-height: 80vh">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="80%" fxLayout="column" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutGap="16px">
+        <div fxFlex="50%">
+          <mat-card>
+            <mat-card-title><mat-icon>battery_full</mat-icon> Akkustand</mat-card-title>
+            <mat-card-content>
+              <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
+              <ngx-charts-area-chart
+                *ngIf="values.length >=1"
+                [scheme]="colorScheme"
+                [legend]="legend"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxis]="xAxis"
+                [yAxis]="yAxis"
+                [yAxisLabel]="yAxisLabel"
+                [timeline]="timeline"
+                [results]="values"
+                [activeEntries]="values"
+                [animations]="animations"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+              >
+              </ngx-charts-area-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div fxFlex="50%">
+          <mat-card>
+            <mat-card-title><mat-icon>battery_charging_full</mat-icon> Ladeleistung</mat-card-title>
+            <mat-card-content>
+              <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
+              <ngx-charts-area-chart
+                *ngIf="batteryChargingPowerValues.length >=1"
+                [scheme]="colorScheme"
+                [legend]="legend"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxis]="xAxis"
+                [yAxis]="yAxis"
+                [yAxisLabel]="yAxisLabel"
+                [timeline]="timeline"
+                [results]="batteryChargingPowerValues"
+                [activeEntries]="batteryChargingPowerValues"
+                [animations]="animations"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+              >
+              </ngx-charts-area-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

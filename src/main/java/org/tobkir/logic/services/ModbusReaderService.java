@@ -6,6 +6,8 @@ import net.solarnetwork.io.modbus.ModbusClient;
 import net.solarnetwork.io.modbus.tcp.netty.NettyTcpModbusClientConfig;
 import net.solarnetwork.io.modbus.tcp.netty.TcpNettyModbusClient;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tobkir.logic.utils.ModbusReader;
 import org.tobkir.model.ModbusValueContainer;
 
@@ -15,6 +17,8 @@ import static org.tobkir.constants.Addresses.*;
 
 @RequestScoped
 public class ModbusReaderService {
+
+    Logger logger = LoggerFactory.getLogger(ModbusReaderService.class);
 
     @ConfigProperty(name = "lightbringer.plant.ip")
     String ip;
@@ -29,11 +33,11 @@ public class ModbusReaderService {
 
     /**
      * Liest Werte aus einem Modbus-Server und speichert sie in einem ModbusValueContainer.
-     *
+     * <p>
      * Diese Methode stellt eine Verbindung zu einem Modbus-Server her, liest verschiedene Werte
      * (wie aktuelle PV-Leistung, Verbrauch von Batterie, PV und Netz) und speichert diese in
      * einem ModbusValueContainer-Objekt.
-     *
+     * <p>
      * Die Methode verwendet eine TCP-Verbindung über Netty zur Kommunikation mit dem Modbus-Server.
      * Nach dem Lesen der Werte wird die Verbindung geschlossen.
      *
@@ -53,7 +57,7 @@ public class ModbusReaderService {
             values.setConsumptionFromBattery(readConsumptionFromBattery());
             values.setConsumptionFromPV(readConsumptionFromPV());
             values.setConsumptionFromGrid(readConsumptionFromGrid());
-
+            values.setBatteryChargingPower(-readBatteryChargingPowerCurrent());
             return values;
 
         } catch (ExecutionException | InterruptedException e) {
@@ -86,5 +90,13 @@ public class ModbusReaderService {
         float power3 = modbusReader.readFloat(PV_POWER_3);
         result = power1 + power2 + power3;
         return result;
+    }
+
+    private float readBatteryChargingPower() {
+        return modbusReader.readFloat(BATTERY_CHARGING_POWER);
+    }
+
+    private int readBatteryChargingPowerCurrent() {
+        return modbusReader.readS16(BATTERY_CHARGING_POWER_CURRENT);
     }
 }

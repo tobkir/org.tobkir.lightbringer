@@ -25,20 +25,22 @@ public class ModbusValueEntity {
     private float consumptionFromGrid;
     private float consumptionFromPV;
     private float actualPVPower;
-
+    private int batteryChargingPower;
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime timestamp;
 
     // Constructors
-    public ModbusValueEntity() {}
+    public ModbusValueEntity() {
+    }
 
-    public ModbusValueEntity(ModbusValueContainer container) {
+    public ModbusValueEntity(ModbusValueContainer container, int batteryChargingPower) {
         this.batteryChargingState = container.getBatteryChargingState();
         this.consumptionFromBattery = container.getConsumptionFromBattery();
         this.consumptionFromGrid = container.getConsumptionFromGrid();
         this.consumptionFromPV = container.getConsumptionFromPV();
         this.actualPVPower = container.getActualPVPower();
         this.timestamp = container.getTimestamp();
+        this.batteryChargingPower = batteryChargingPower;
     }
 
     // Getters and setters
@@ -94,6 +96,14 @@ public class ModbusValueEntity {
         this.timestamp = timestamp;
     }
 
+    public int getBatteryChargingPower() {
+        return batteryChargingPower;
+    }
+
+    public void setBatteryChargingPower(int batteryChargingPower) {
+        this.batteryChargingPower = batteryChargingPower;
+    }
+
     // equals and hashCode methods
     @Override
     public boolean equals(Object o) {
@@ -118,6 +128,7 @@ public class ModbusValueEntity {
                 ", consumptionFromGrid=" + consumptionFromGrid +
                 ", consumptionFromPV=" + consumptionFromPV +
                 ", actualPVPower=" + actualPVPower +
+                ", batteryChargingPower=" + batteryChargingPower +
                 ", timestamp=" + timestamp +
                 '}';
     }

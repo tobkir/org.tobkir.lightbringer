@@ -9,5 +9,7 @@ public class Addresses {
     public final static int PV_POWER_1 = 260;
     public final static int PV_POWER_2 = 270;
     public final static int PV_POWER_3 = 280;
+    public final static int BATTERY_CHARGING_POWER = 200;
+    public final static int BATTERY_CHARGING_POWER_CURRENT = 582;
 
 }

@@ -10,6 +10,7 @@ public class ModbusValueContainer {
     private float consumptionFromGrid;
     private float consumptionFromPV;
     private float actualPVPower;
+    private int batteryChargingPower;
     private ZonedDateTime timestamp;
 
     public ModbusValueContainer() {
@@ -93,5 +94,13 @@ public class ModbusValueContainer {
                 ", actualPVPower=" + actualPVPower +
                 ", timestamp=" + timestamp +
                 '}';
+    }
+
+    public int getBatteryChargingPower() {
+        return batteryChargingPower;
+    }
+
+    public void setBatteryChargingPower(int batteryChargingPower) {
+        this.batteryChargingPower = batteryChargingPower;
     }
 }
