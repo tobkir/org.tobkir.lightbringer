@@ -26,14 +26,14 @@ public class ModbusScheduler {
         this.mapper = mapper;
     }
 
-    @Scheduled(cron = "*/1 * * * * ?")
+    @Scheduled(cron = "*/5 * * * * ?")
     public void scheduledReadValues() {
         try {
             logger.info("Reading Modbus.");
             modbusValueService.saveModbusValue(mapper.toEntity(modbusReaderService.readValuesContainer()));
             logger.info("Modbus values successfully read and processed.");
         } catch (RuntimeException e) {
-            logger.info("Error reading Modbus values: " + e.getMessage());
+            logger.info("Error reading Modbus values: {}", e.getMessage());
         }
     }
 }

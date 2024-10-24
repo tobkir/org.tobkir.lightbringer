@@ -2,6 +2,7 @@ package org.tobkir.logic.persistence;
 
 import org.tobkir.model.BatteryState;
 import org.tobkir.model.ModbusValueEntity;
+import org.tobkir.model.PvConsumptionState;
 import org.tobkir.model.PvPowerState;
 
 import java.time.ZonedDateTime;
@@ -14,7 +15,7 @@ public interface ModbusValueDAO {
     List<BatteryState> findAllBatteryChargingStates(ZonedDateTime start, ZonedDateTime end);
     List<Float> findAllConsumptionFromBattery();
     List<Float> findAllConsumptionFromGrid();
-    List<Float> findAllConsumptionFromPV();
+    List<PvConsumptionState> findAllConsumptionFromPV(ZonedDateTime start, ZonedDateTime end);
     List<PvPowerState> findAllActualPVPower(ZonedDateTime start, ZonedDateTime end);
 
     void save(ModbusValueEntity entity);

@@ -36,4 +36,12 @@ export class ValueService {
     const params = new HttpParams().set('start', formattedStart).set('end', formattedEnd);
     return this.backendService.getPvStates(url, params);
   }
+
+  getPvConsumptionStates(start: Date, end: Date) {
+    let url = this.apiUrl.concat("/consumption-from-pv");
+    let formattedStart = this.queryParamDateService.getDateQueryParamString(start)
+    let formattedEnd = this.queryParamDateService.getDateQueryParamString(end)
+    const params = new HttpParams().set('start', formattedStart).set('end', formattedEnd);
+    return this.backendService.getPvConsumptionStates(url, params);
+  }
 }

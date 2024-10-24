@@ -1,9 +1,9 @@
 <div class="container" style="text-align:center; min-height: 80vh">
-  <mat-spinner color="secondary" *ngIf="values.length < 1" mode="indeterminate">
+  <mat-spinner color="secondary" *ngIf="values.length < 2" mode="indeterminate">
 
   </mat-spinner>
   <ngx-charts-area-chart
-    *ngIf="values.length >=1"
+    *ngIf="values.length >=2"
     [scheme]="colorScheme"
     [legend]="legend"
     [showYAxisLabel]="showYAxisLabel"

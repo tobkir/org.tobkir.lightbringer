@@ -59,8 +59,13 @@ public class ModbusValueRestService {
 
     @GET
     @Path("/consumption-from-pv")
-    public List<Float> getAllConsumptionFromPV() {
-        return modbusValueService.getAllConsumptionFromPV();
+    public Response getAllConsumptionFromPV(
+            @QueryParam("start") String startString,
+            @QueryParam("end") String endString
+    ) {
+        ZonedDateTime start = dateParserRestHelper.parseQueryParamStringToZDT(startString);
+        ZonedDateTime end = dateParserRestHelper.parseQueryParamStringToZDT(endString);
+        return Response.ok(modbusValueService.getAllConsumptionFromPV(start, end)).build();
     }
 
     @GET

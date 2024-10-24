@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.tobkir.model.PvConsumptionState;
 import org.tobkir.model.PvPowerState;
 
 import java.time.ZonedDateTime;
@@ -46,8 +47,10 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
     }
 
     @Override
-    public List<Float> findAllConsumptionFromPV() {
-        return em.createQuery("SELECT m.consumptionFromPV FROM ModbusValueEntity m", Float.class)
+    public List<PvConsumptionState> findAllConsumptionFromPV(ZonedDateTime start, ZonedDateTime end) {
+        return em.createQuery("SELECT m.consumptionFromPV, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", PvConsumptionState.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getResultList();
     }
 

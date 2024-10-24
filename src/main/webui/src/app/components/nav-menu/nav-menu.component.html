@@ -5,11 +5,12 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="'/home'">Home</a>
-      <a mat-list-item [matMenuTriggerFor]="batteryMenu">Statistiken</a>
+      <button mat-button [routerLink]="'/home'"><mat-icon>home</mat-icon> Home</button>
+      <button mat-button [matMenuTriggerFor]="batteryMenu"><mat-icon>assessment</mat-icon> Statistiken</button>
       <mat-menu #batteryMenu="matMenu">
-        <button mat-menu-item [routerLink]="'/pv'">PV</button>
-        <button mat-menu-item [routerLink]="'/battery'">Speicher</button>
+        <button mat-menu-item [routerLink]="'/pv'"><mat-icon>wb_sunny</mat-icon> PV</button>
+        <button mat-menu-item [routerLink]="'/battery'"><mat-icon>battery_full</mat-icon> Speicher</button>
+        <button mat-menu-item [routerLink]="'/consumption'"><mat-icon> pie_chart</mat-icon> Verbrauch</button>
       </mat-menu>
     </mat-nav-list>
   </mat-sidenav>
