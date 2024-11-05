@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {GeneralInfoService} from "../../services/logic/general-info.service";
+import {GeneralInfoContainer} from "../../model/general-info-container.model";
 
 @Component({
   selector: 'app-nav-menu',
@@ -30,12 +32,28 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
     MatMenuItem,
   ]
 })
-export class NavMenuComponent {
+export class NavMenuComponent implements OnInit{
+  ip:GeneralInfoContainer = new GeneralInfoContainer("");
   private breakpointObserver = inject(BreakpointObserver);
+
+  constructor(
+    private generalInfoService: GeneralInfoService
+  ) {
+  }
+
+  ngOnInit(): void {
+        this.getIp();
+    }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+
+  private getIp() {
+    this.generalInfoService.getIp().subscribe(
+      ip => this.ip=ip
+    )
+  }
 }

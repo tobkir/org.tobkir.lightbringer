@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable, Subscription, tap} from "rxjs";
+import {Subscription} from "rxjs";
 import {Color, NgxChartsModule, PieChartModule, ScaleType} from "@swimlane/ngx-charts";
 import {NgIf} from "@angular/common";
 import {ValueService} from "../../services/logic/value.service";
@@ -69,8 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log("Weg mit de viecher")
     clearInterval(this.latestInteval);
     this.subscription.unsubscribe();
   }
+
 }

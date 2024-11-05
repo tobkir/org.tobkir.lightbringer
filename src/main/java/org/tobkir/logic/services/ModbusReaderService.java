@@ -1,7 +1,6 @@
 package org.tobkir.logic.services;
 
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
 import net.solarnetwork.io.modbus.ModbusClient;
 import net.solarnetwork.io.modbus.tcp.netty.NettyTcpModbusClientConfig;
 import net.solarnetwork.io.modbus.tcp.netty.TcpNettyModbusClient;
@@ -9,12 +8,22 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tobkir.logic.utils.ModbusReader;
+import org.tobkir.model.GeneralInformationContainer;
 import org.tobkir.model.ModbusValueContainer;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletionStage;
 
 import static org.tobkir.constants.Addresses.*;
 
+/**
+ * Serviceklasse, die für das Lesen von Werten von einem Modbus-Server zuständig ist.
+ * <p>
+ * Diese Klasse stellt eine Verbindung zu einem Modbus-Server her und liest verschiedene Messwerte
+ * wie PV-Leistung und Verbrauchsdaten. Sie verwendet eine TCP-Verbindung über Netty für die Kommunikation.
+ * Die gelesenen Werte werden in einem {@link ModbusValueContainer} gespeichert.
+ * <p>
+ * Die Klasse ist als @RequestScoped deklariert, was bedeutet, dass sie während einer HTTP-Anfrage instanziiert wird.
+ */
 @RequestScoped
 public class ModbusReaderService {
 
@@ -26,8 +35,7 @@ public class ModbusReaderService {
     @ConfigProperty(name = "lightbringer.plant.port")
     int port;
 
-    @Inject
-    ModbusReader modbusReader;
+    private ModbusReader modbusReader;
 
     private ModbusClient client;
 
@@ -43,32 +51,37 @@ public class ModbusReaderService {
      *
      * @throws RuntimeException wenn während der Ausführung ein Fehler auftritt (z.B. Verbindungsfehler)
      */
-    public ModbusValueContainer readValuesContainer() {
-        try {
-            ModbusValueContainer values = new ModbusValueContainer();
-            NettyTcpModbusClientConfig config = new NettyTcpModbusClientConfig(ip, port);
-            client = new TcpNettyModbusClient(config);
+    public CompletionStage<ModbusValueContainer> readValuesContainer() {
+        ModbusValueContainer values = new ModbusValueContainer();
+        NettyTcpModbusClientConfig config = new NettyTcpModbusClientConfig(ip, port);
+        client = new TcpNettyModbusClient(config);
 
-            modbusReader = new ModbusReader(client);
+        modbusReader = new ModbusReader(client);
 
-            client.start().get();
+        return client.start().thenApplyAsync(voidResult -> {
+            // Werte lesen
             values.setBatteryChargingState(readBatteryChargingState());
-            values.setActualPVPower(readActualPVPower());
+            values.setActualPVPower(readActualPVPower(PV_POWER_1, PV_POWER_2, PV_POWER_3));
             values.setConsumptionFromBattery(readConsumptionFromBattery());
             values.setConsumptionFromPV(readConsumptionFromPV());
             values.setConsumptionFromGrid(readConsumptionFromGrid());
             values.setBatteryChargingPower(-readBatteryChargingPowerCurrent());
-            logger.info(String.valueOf(-readBatteryChargingPowerCurrent()));
-            logger.info("ChargingPower: {}", values.getBatteryChargingPower());
+//            logger.info("Speicher_Firmware: {}", readBatteryFirmware());
+//            logger.info("Speicher_Kapazität: {}", readBatteryCapacity());
+            values.setDailyYield(readDailyYield());
+            logger.info("Energy Scale Factor: {}", readDailyYield());
             return values;
-
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        } finally {
+        }).exceptionally(ex -> {
+            // Fehlerbehandlung
+            logger.error("Fehler beim Starten der Modbus-Verbindung: {}", ex.getMessage(), ex);
+            throw new RuntimeException("Fehler beim Starten der Modbus-Verbindung", ex);
+        }).whenComplete((result, throwable) -> {
+            // Verbindung schließen, egal ob erfolgreich oder fehlerhaft
             client.stop();
-        }
+        });
     }
 
+    // Private Hilfsmethoden zum Lesen spezifischer Modbus-Werte
     private int readBatteryChargingState() {
         return (int) modbusReader.readFloat(BATTERY_CHARGING_STATE);
     }
@@ -85,14 +98,16 @@ public class ModbusReaderService {
         return modbusReader.readFloat(CONSUMPTION_FROM_BATTERY);
     }
 
-    private float readActualPVPower() {
-        float result;
-        float power1 = modbusReader.readFloat(PV_POWER_1);
-        float power2 = modbusReader.readFloat(PV_POWER_2);
-        float power3 = modbusReader.readFloat(PV_POWER_3);
-        result = power1 + power2 + power3;
-        return result;
+    private float readActualPVPower(int... addresses) {
+        float totalPower = 0;
+
+        for (int address : addresses) {
+            totalPower += modbusReader.readFloat(address);
+        }
+
+        return totalPower;
     }
+
 
     private float readBatteryChargingPower() {
         return modbusReader.readFloat(BATTERY_CHARGING_POWER);
@@ -100,5 +115,22 @@ public class ModbusReaderService {
 
     private int readBatteryChargingPowerCurrent() {
         return modbusReader.readS16(BATTERY_CHARGING_POWER_CURRENT);
+    }
+
+    public GeneralInformationContainer getIp() {
+        return new GeneralInformationContainer(ip);
+    }
+
+    private long readBatteryFirmware() {
+        return modbusReader.readU32(BATTERY_FIRMWARE);
+    }
+
+    private long readBatteryCapacity() {
+        return modbusReader.readU32(BATTERY_GROSS_CAPACITY);
+    }
+
+    private float readDailyYield() {
+        return modbusReader.readFloat(322
+        );
     }
 }

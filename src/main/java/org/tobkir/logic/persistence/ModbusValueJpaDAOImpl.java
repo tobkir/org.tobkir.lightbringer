@@ -28,7 +28,10 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
 
     @Override
     public List<BatteryState> findAllBatteryChargingStates(ZonedDateTime start, ZonedDateTime end) {
-        return em.createQuery("SELECT m.batteryChargingState, m.batteryChargingPower, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", BatteryState.class)
+        return em.createQuery("SELECT m.batteryChargingState, " +
+                        "m.batteryChargingPower, " +
+                        "m.consumptionFromBattery, " +
+                        "m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", BatteryState.class)
                 .setParameter("start", start)
                 .setParameter("end", end)
                 .getResultList();
@@ -56,7 +59,7 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
 
     @Override
     public List<PvPowerState> findAllActualPVPower(ZonedDateTime start, ZonedDateTime end) {
-        return em.createQuery("SELECT m.actualPVPower, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", PvPowerState.class)
+        return em.createQuery("SELECT m.actualPVPower, m.dailyYield, m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", PvPowerState.class)
                 .setParameter("start", start)
                 .setParameter("end", end)
                 .getResultList();

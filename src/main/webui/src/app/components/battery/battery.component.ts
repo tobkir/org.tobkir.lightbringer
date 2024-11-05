@@ -1,6 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {NgIf} from "@angular/common";
-import {Color, AreaChartModule, ScaleType, NumberCardModule} from "@swimlane/ngx-charts";
+import {NgClass, NgIf, NgStyle} from "@angular/common";
+import {
+  AreaChartModule,
+  Color,
+  LegendPosition,
+  NumberCardModule,
+  PieChartModule,
+  ScaleType
+} from "@swimlane/ngx-charts";
 import {ValueService} from "../../services/logic/value.service";
 import {BatteryState} from "../../model/battery-state.model";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -8,6 +15,8 @@ import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {FlexModule} from "@angular/flex-layout";
 import {ModbusValueContainer} from 'src/app/model/modbus-value-container.model';
+import {BatteryInfoContainer} from "../../model/battery-info-container.model";
+import {MathService} from "../../services/utils/math.service";
 
 @Component({
   selector: 'app-battery',
@@ -21,7 +30,10 @@ import {ModbusValueContainer} from 'src/app/model/modbus-value-container.model';
     MatCardContent,
     MatIcon,
     FlexModule,
-    NumberCardModule
+    NumberCardModule,
+    NgStyle,
+    NgClass,
+    PieChartModule
   ],
   templateUrl: './battery.component.html',
   styleUrl: './battery.component.scss'
@@ -31,12 +43,19 @@ export class BatteryComponent implements OnInit {
   endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
   requestBatteryStateInterval: any;
   powerColorScheme: Color = {
-    name: "test", selectable: true, group: ScaleType.Linear,
+    name: "power", selectable: true, group: ScaleType.Linear,
     domain: ['#3893a8']
   };
+  consumptionColorScheme: Color = {
+    name: "power", selectable: true, group: ScaleType.Linear,
+    domain: ['#a83849']
+  };
   stateColorScheme: Color = {
-    name: "test", selectable: true, group: ScaleType.Linear,
-    domain: ['#4cf394']
+    name: "state", selectable: true, group: ScaleType.Linear,
+    domain: [
+      '#4cf394',
+      '#365480'
+    ]
   };
   cardColor: string = '#383b45';
 
@@ -49,11 +68,17 @@ export class BatteryComponent implements OnInit {
   showYAxisLabel: boolean = true;
   yAxisStateLabel: string = 'Akkustand in %';
   yAxisPowerLabel: string = 'Ladeleistung in W';
+  yAxisConsumptionLabel: string = 'Verbrauch in W';
   timeline: boolean = true;
-  latestValue: any[] = [];
+  latestValue: ModbusValueContainer | undefined;
+  batteryInfos: BatteryInfoContainer | undefined;
+  batteryInfoValues: any [] = [];
+  consumptionValues: any [] = [];
+  legendPosition: string = 'below';
 
   constructor(
-    private valueService: ValueService
+    private valueService: ValueService,
+    protected mathService: MathService
   ) {
   }
 
@@ -63,13 +88,24 @@ export class BatteryComponent implements OnInit {
   }
 
   setBatteryStateValues = (entries: BatteryState[]) => {
-    let series: any[] = [];
+    let stateSeries: any[] = []
+    let consumptionSeries: any[] = []
     entries.forEach((entry: BatteryState) => {
-      series.push({name: entry.timestamp, value: entry.batteryChargingState})
-    })
+      stateSeries.push({name: entry.timestamp, value: entry.batteryChargingState})
+      consumptionSeries.push({name: entry.timestamp, value: !entry.batteryConsumption ? 0 : entry.batteryConsumption})
+    });
     this.values.push(
-      {"name": "Akkustand", "series": [...series]}
+      {
+        "name": "Akkustand",
+        "series": [...stateSeries]
+      }
     );
+    this.consumptionValues.push(
+      {
+        "name": "Verbrauch aus Akku",
+        "series": [...consumptionSeries]
+      }
+    )
   }
 
   getValues = (start?: Date, end?: Date) => {
@@ -82,14 +118,26 @@ export class BatteryComponent implements OnInit {
     this.valueService.getBatteryState(start, end).subscribe(entries => {
       this.setBatteryStateValues(entries);
       this.setBatteryChargingPowerValues(entries);
+      this.setLatestValues();
     });
+    this.setBatteryInformations();
+  }
+
+  setBatteryInformations() {
+    if(this.latestValue) {
+      this.batteryInfoValues =
+        [
+          {name: "" + this.latestValue.batteryChargingState + " % voll", value: this.latestValue.batteryChargingState},
+          {name: "" + (100 - this.latestValue.batteryChargingState) + " % leer", value: (100 - this.latestValue.batteryChargingState)}
+        ]
+    }
+  }
+
+  setLatestValues() {
     this.valueService.getLatestValues().subscribe(
       entry => {
-        this.latestValue= [
-          {name: "Akkustand", value: entry.batteryChargingState},
-          {name: "Aktuelle Ladeleistung", value: !entry.batteryChargingPower? 0 :entry.batteryChargingPower},
-          {name: "Verbrauch aus Speicher", value: entry.consumptionFromBattery},
-        ]
+        this.latestValue = entry;
+        this.setBatteryInformations()
       }
     )
   }
@@ -120,4 +168,6 @@ export class BatteryComponent implements OnInit {
     console.log("Weg mit de viecher")
     clearInterval(this.requestBatteryStateInterval);
   }
+
+  protected readonly LegendPosition = LegendPosition;
 }

@@ -26,6 +26,7 @@ public class ModbusValueEntity {
     private float consumptionFromPV;
     private float actualPVPower;
     private int batteryChargingPower;
+    private float dailyYield;
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime timestamp;
 
@@ -33,7 +34,7 @@ public class ModbusValueEntity {
     public ModbusValueEntity() {
     }
 
-    public ModbusValueEntity(ModbusValueContainer container, int batteryChargingPower) {
+    public ModbusValueEntity(ModbusValueContainer container, int batteryChargingPower, float dailyYield) {
         this.batteryChargingState = container.getBatteryChargingState();
         this.consumptionFromBattery = container.getConsumptionFromBattery();
         this.consumptionFromGrid = container.getConsumptionFromGrid();
@@ -41,6 +42,7 @@ public class ModbusValueEntity {
         this.actualPVPower = container.getActualPVPower();
         this.timestamp = container.getTimestamp();
         this.batteryChargingPower = batteryChargingPower;
+        this.dailyYield = dailyYield;
     }
 
     // Getters and setters
@@ -131,5 +133,13 @@ public class ModbusValueEntity {
                 ", batteryChargingPower=" + batteryChargingPower +
                 ", timestamp=" + timestamp +
                 '}';
+    }
+
+    public float getDailyYield() {
+        return dailyYield;
+    }
+
+    public void setDailyYield(float dailyYield) {
+        this.dailyYield = dailyYield;
     }
 }

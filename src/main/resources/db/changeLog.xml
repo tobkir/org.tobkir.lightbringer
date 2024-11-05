@@ -30,9 +30,16 @@
             </column>
         </createTable>
     </changeSet>
+
     <changeSet id="2-add-Battery-Charging-Power" author="tobkir">
         <addColumn tableName="modbus_values">
             <column name="BATTERYCHARGINGPOWER" type="INT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="3-add-Daily-Yield" author="tobkir">
+        <addColumn tableName="modbus_values">
+            <column name="DAILYYIELD" type="FLOAT"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

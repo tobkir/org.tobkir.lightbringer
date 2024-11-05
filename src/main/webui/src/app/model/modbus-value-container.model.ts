@@ -1,17 +1,11 @@
 export class ModbusValueContainer {
-  get batteryChargingPower(): number {
-    return this._batteryChargingPower;
-  }
-
-  set batteryChargingPower(value: number) {
-    this._batteryChargingPower = value;
-  }
   private _batteryChargingState: number;
   private _batteryChargingPower: number;
   private _consumptionFromBattery: number;
   private _consumptionFromGrid: number;
   private _consumptionFromPV: number;
   private _actualPVPower: number;
+  private _dailyYield: number;
   private _timestamp: Date;
 
   constructor() {
@@ -21,6 +15,7 @@ export class ModbusValueContainer {
     this._consumptionFromGrid = 0.0;
     this._consumptionFromPV = 0.0;
     this._actualPVPower = 0.0;
+    this._dailyYield = 0.0;
     this._timestamp = new Date(); // Set current time as default
   }
 
@@ -70,5 +65,21 @@ export class ModbusValueContainer {
 
   set timestamp(value: Date) {
     this._timestamp = value;
+  }
+
+  get dailyYield(): number {
+    return this._dailyYield;
+  }
+
+  set dailyYield(value: number) {
+    this._dailyYield = value;
+  }
+
+  get batteryChargingPower(): number {
+    return this._batteryChargingPower;
+  }
+
+  set batteryChargingPower(value: number) {
+    this._batteryChargingPower = value;
   }
 }

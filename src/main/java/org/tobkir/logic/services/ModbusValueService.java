@@ -38,20 +38,6 @@ public class ModbusValueService {
     public List<BatteryState> getAllBatteryChargingStates(ZonedDateTime start, ZonedDateTime end) {
         return modbusValueDAO.findAllBatteryChargingStates(start, end);
 
-//        batteryStates = batteryStates.stream()
-//                .sorted(Comparator.comparing(BatteryState::getTimestamp))
-//                .toList();
-//
-//        List<BatteryState> filteredStates = new ArrayList<>();
-//        ZonedDateTime lastTimestamp = null;
-//
-//        for (BatteryState state : batteryStates) {
-//            if (lastTimestamp == null || Duration.between(lastTimestamp, state.getTimestamp()).toMinutes() >= 2) {
-//                filteredStates.add(state);
-//                lastTimestamp = state.getTimestamp();
-//            }
-//        }
-//        return filteredStates;
     }
 
     public List<Float> getAllConsumptionFromBattery() {
@@ -64,40 +50,10 @@ public class ModbusValueService {
 
     public List<PvConsumptionState> getAllConsumptionFromPV(ZonedDateTime start, ZonedDateTime end) {
         return modbusValueDAO.findAllConsumptionFromPV(start, end);
-//        pvPowerStates = pvPowerStates.stream()
-//                .sorted(Comparator.comparing(PvConsumptionState::getTimestamp))
-//                .toList();
-//
-//        List<PvConsumptionState> filteredStates = new ArrayList<>();
-//        ZonedDateTime lastTimestamp = null;
-//
-//        for (PvConsumptionState state : pvPowerStates) {
-//            if (lastTimestamp == null || Duration.between(lastTimestamp, state.getTimestamp()).toMinutes() >= 2) {
-//                filteredStates.add(state);
-//                lastTimestamp = state.getTimestamp();
-//            }
-//        }
-//
-//        return filteredStates;
     }
 
     public List<PvPowerState> getAllActualPVPower(ZonedDateTime start, ZonedDateTime end) {
         return modbusValueDAO.findAllActualPVPower(start, end);
-
-//        pvPowerStates = pvPowerStates.stream()
-//                .sorted(Comparator.comparing(PvPowerState::getTimestamp))
-//                .toList();
-//
-//        List<PvPowerState> filteredStates = new ArrayList<>();
-//        ZonedDateTime lastTimestamp = null;
-//
-//        for (PvPowerState state : pvPowerStates) {
-//            if (lastTimestamp == null || Duration.between(lastTimestamp, state.getTimestamp()).toMinutes() >= 2) {
-//                filteredStates.add(state);
-//                lastTimestamp = state.getTimestamp();
-//            }
-//        }
-//        return filteredStates;
     }
 
     public ModbusValueEntity saveModbusValue(ModbusValueEntity entity) {

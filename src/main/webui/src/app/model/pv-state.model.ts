@@ -1,5 +1,4 @@
 export class PvState {
-
   private _actualPVPower: number;
   private _timestamp: Date;
 
@@ -25,4 +24,5 @@ export class PvState {
   set timestamp(value: Date) {
     this._timestamp = value;
   }
+
 }

@@ -25,7 +25,10 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       }
-      <span>Lightbringer</span>
+      <span>
+        <mat-icon>device_hub</mat-icon> SICAS on
+        <mat-icon *ngIf="ip">storage</mat-icon> {{ip?this.ip.ip:""}}
+      </span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

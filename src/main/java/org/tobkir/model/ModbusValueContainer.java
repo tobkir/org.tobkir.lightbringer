@@ -11,6 +11,7 @@ public class ModbusValueContainer {
     private float consumptionFromPV;
     private float actualPVPower;
     private int batteryChargingPower;
+    private float dailyYield;
     private ZonedDateTime timestamp;
 
     public ModbusValueContainer() {
@@ -102,5 +103,13 @@ public class ModbusValueContainer {
 
     public void setBatteryChargingPower(int batteryChargingPower) {
         this.batteryChargingPower = batteryChargingPower;
+    }
+
+    public float getDailyYield() {
+        return dailyYield;
+    }
+
+    public void setDailyYield(float dailyYield) {
+        this.dailyYield = dailyYield;
     }
 }

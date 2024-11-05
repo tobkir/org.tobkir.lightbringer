@@ -163,18 +163,28 @@ $dark-theme: mat.define-theme((
     @include mat.button-color($light-theme);
   }
 }
-
-
+.chart-legend .legend-label-text {
+  color: #a0aabe!important;
+  :hover{
+    color: #a6df9b !important;
+  }
+}
+.chart-legend .legend-label {
+  color: #a0aabe!important;
+}
+.chart-legend .legend-label:hover {
+  color: #a6df9b !important;
+}
 .dark .ngx-charts text {
-  fill: #a0aabe;
+  fill: #a0aabe!important;
 }
 
 .light .ngx-charts text {
-  fill: #a0aabe;
+  fill: #a0aabe!important;
 }
 
 .ngx-charts text {
-  fill: #a0aabe;
+  fill: #a0aabe!important;
 }
 
 html, body {
@@ -184,4 +194,25 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-card {
+  background-color: #383b45 !important;
+  padding: 10px;
+  height: 100%;
+}
+.mat-mdc-progress-spinner {
+  margin: auto;
+  height: 100px!important;
+  width: 100px!important;
+}
+.mat-progress-spinner {
+  margin: auto;
+  height: 100px!important;
+  width: 100px!important;
+}
+mat-spinner {
+  margin: auto;
+  height: 200px!important;
+  width: 200px!important;
 }

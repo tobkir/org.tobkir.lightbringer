@@ -11,11 +11,18 @@ export class QueryParamDateService {
     let minutes;
     let seconds;
     let milliseconds;
+    let day;
 
     if (date.getMonth() <= 8) {
-      month = "0" + (date.getMonth() + 1);
+      month = "0".concat(String((date.getMonth() + 1)));
     } else {
       month = (date.getMonth() + 1).toString()
+    }
+
+    if (date.getDate() <= 8) {
+      day = "0".concat(String(date.getDate()));
+    } else {
+      day = date.getDate().toString();
     }
 
     if (date.getHours().toString().length == 1) {
@@ -48,7 +55,7 @@ export class QueryParamDateService {
       .concat("-")
       .concat(month)
       .concat("-")
-      .concat((date.getDate()).toString())
+      .concat(day)
       .concat(" ")
       .concat(hours)
       .concat(":")

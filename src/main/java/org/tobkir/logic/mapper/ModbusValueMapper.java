@@ -4,6 +4,13 @@ import jakarta.enterprise.context.RequestScoped;
 import org.tobkir.model.ModbusValueContainer;
 import org.tobkir.model.ModbusValueEntity;
 
+/**
+ * Mapper-Klasse zur Umwandlung zwischen {@link ModbusValueContainer} und {@link ModbusValueEntity}.
+ * <p>
+ * Diese Klasse stellt Methoden zur Verfügung, um Daten von einem Container-Objekt, das Werte aus
+ * dem Modbus-Leseprozess enthält, in eine Entität zu konvertieren und umgekehrt. Dies erleichtert
+ * die Datenübertragung zwischen verschiedenen Schichten der Anwendung.
+ */
 @RequestScoped
 public class ModbusValueMapper {
 
@@ -24,6 +31,7 @@ public class ModbusValueMapper {
         entity.setConsumptionFromGrid(container.getConsumptionFromGrid());
         entity.setConsumptionFromPV(container.getConsumptionFromPV());
         entity.setActualPVPower(container.getActualPVPower());
+        entity.setDailyYield(container.getDailyYield());
         entity.setTimestamp(container.getTimestamp());
         return entity;
     }
@@ -45,7 +53,8 @@ public class ModbusValueMapper {
         container.setConsumptionFromPV(entity.getConsumptionFromPV());
         container.setActualPVPower(entity.getActualPVPower());
         container.setTimestamp(entity.getTimestamp());
-        entity.setBatteryChargingPower(container.getBatteryChargingPower());
+        container.setBatteryChargingPower(entity.getBatteryChargingPower());
+        container.setDailyYield(entity.getDailyYield());
         return container;
     }
 }
