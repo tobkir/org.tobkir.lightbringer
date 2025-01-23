@@ -17,24 +17,23 @@ import {PvState} from "../../model/pv-state.model";
 import {ConsumptionState} from "../../model/consumption-state.model";
 
 @Component({
-  selector: 'app-consumption',
-  standalone: true,
-  imports: [
-    AreaChartModule,
-    FlexModule,
-    MatCard,
-    MatCardContent,
-    MatCardTitle,
-    MatIcon,
-    MatProgressSpinner,
-    NgIf,
-    MatCardHeader,
-    MatCardSubtitle,
-    MatCardAvatar,
-    DatePipe
-  ],
-  templateUrl: './consumption.component.html',
-  styleUrl: './consumption.component.scss'
+    selector: 'app-consumption',
+    imports: [
+        AreaChartModule,
+        FlexModule,
+        MatCard,
+        MatCardContent,
+        MatCardTitle,
+        MatIcon,
+        MatProgressSpinner,
+        NgIf,
+        MatCardHeader,
+        MatCardSubtitle,
+        MatCardAvatar,
+        DatePipe
+    ],
+    templateUrl: './consumption.component.html',
+    styleUrl: './consumption.component.scss'
 })
 export class ConsumptionComponent implements OnInit{
   //TODO Config mit Constructor

@@ -20,26 +20,25 @@ import {MathService} from "../../services/utils/math.service";
 import {MatCalendarHeader} from "@angular/material/datepicker";
 
 @Component({
-  selector: 'app-battery',
-  standalone: true,
-  imports: [
-    NgIf,
-    AreaChartModule,
-    MatProgressSpinnerModule,
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatIcon,
-    FlexModule,
-    NumberCardModule,
-    NgStyle,
-    NgClass,
-    PieChartModule,
-    MatCalendarHeader,
-    MatCardAvatar
-  ],
-  templateUrl: './battery.component.html',
-  styleUrl: './battery.component.scss'
+    selector: 'app-battery',
+    imports: [
+        NgIf,
+        AreaChartModule,
+        MatProgressSpinnerModule,
+        MatCard,
+        MatCardTitle,
+        MatCardContent,
+        MatIcon,
+        FlexModule,
+        NumberCardModule,
+        NgStyle,
+        NgClass,
+        PieChartModule,
+        MatCalendarHeader,
+        MatCardAvatar
+    ],
+    templateUrl: './battery.component.html',
+    styleUrl: './battery.component.scss'
 })
 export class BatteryComponent implements OnInit {
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);

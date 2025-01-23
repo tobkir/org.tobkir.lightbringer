@@ -9,24 +9,23 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {NavMenuComponent} from "./components/nav-menu/nav-menu.component";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    MatMenu,
-    MatMenuItem,
-    MatButton,
-    MatMenuTrigger,
-    MatSidenavModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatListModule,
-    NavMenuComponent
-  ],
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        MatMenu,
+        MatMenuItem,
+        MatButton,
+        MatMenuTrigger,
+        MatSidenavModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatListModule,
+        NavMenuComponent
+    ],
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'lightbringer';

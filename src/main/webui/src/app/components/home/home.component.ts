@@ -6,16 +6,15 @@ import {ValueService} from "../../services/logic/value.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    PieChartModule,
-    NgIf,
-    NgxChartsModule,
-    MatProgressSpinner
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    imports: [
+        PieChartModule,
+        NgIf,
+        NgxChartsModule,
+        MatProgressSpinner
+    ],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();

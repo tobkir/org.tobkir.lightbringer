@@ -12,23 +12,22 @@ import {ModbusValueContainer} from "../../model/modbus-value-container.model";
 import {MathService} from "../../services/utils/math.service";
 
 @Component({
-  selector: 'app-pv',
-  standalone: true,
-  imports: [
-    AreaChartModule,
-    MatProgressSpinner,
-    NgIf,
-    FlexLayoutModule,
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
-    MatIcon,
-    NumberCardModule,
-    MatCardAvatar,
-    MatCardHeader
-  ],
-  templateUrl: './pv.component.html',
-  styleUrl: './pv.component.scss'
+    selector: 'app-pv',
+    imports: [
+        AreaChartModule,
+        MatProgressSpinner,
+        NgIf,
+        FlexLayoutModule,
+        MatCard,
+        MatCardTitle,
+        MatCardContent,
+        MatIcon,
+        NumberCardModule,
+        MatCardAvatar,
+        MatCardHeader
+    ],
+    templateUrl: './pv.component.html',
+    styleUrl: './pv.component.scss'
 })
 export class PvComponent implements OnInit, OnDestroy {
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);

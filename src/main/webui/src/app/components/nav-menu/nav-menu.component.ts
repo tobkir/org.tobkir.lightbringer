@@ -16,30 +16,29 @@ import {MatExpansionPanel, MatExpansionPanelTitle,MatExpansionPanelHeader} from 
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrl: './nav-menu.component.scss',
-  standalone: true,
-  imports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    AsyncPipe,
-    RouterOutlet,
-    RouterLink,
-    MatMenuTrigger,
-    MatMenu,
-    MatMenuItem,
-    NgOptimizedImage,
-    NgIf,
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
-    MatGridList,
-    MatGridTile,
-  ]
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrl: './nav-menu.component.scss',
+    imports: [
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        AsyncPipe,
+        RouterOutlet,
+        RouterLink,
+        MatMenuTrigger,
+        MatMenu,
+        MatMenuItem,
+        NgOptimizedImage,
+        NgIf,
+        MatExpansionPanel,
+        MatExpansionPanelTitle,
+        MatExpansionPanelHeader,
+        MatGridList,
+        MatGridTile,
+    ]
 })
 export class NavMenuComponent implements OnInit {
   ip: GeneralInfoContainer = new GeneralInfoContainer("");
