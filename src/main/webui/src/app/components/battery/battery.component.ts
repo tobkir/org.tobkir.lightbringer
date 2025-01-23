@@ -11,12 +11,13 @@ import {
 import {ValueService} from "../../services/logic/value.service";
 import {BatteryState} from "../../model/battery-state.model";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
+import {MatCard, MatCardAvatar, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {FlexModule} from "@angular/flex-layout";
 import {ModbusValueContainer} from 'src/app/model/modbus-value-container.model';
 import {BatteryInfoContainer} from "../../model/battery-info-container.model";
 import {MathService} from "../../services/utils/math.service";
+import {MatCalendarHeader} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-battery',
@@ -33,7 +34,9 @@ import {MathService} from "../../services/utils/math.service";
     NumberCardModule,
     NgStyle,
     NgClass,
-    PieChartModule
+    PieChartModule,
+    MatCalendarHeader,
+    MatCardAvatar
   ],
   templateUrl: './battery.component.html',
   styleUrl: './battery.component.scss'
@@ -145,7 +148,12 @@ export class BatteryComponent implements OnInit {
   setBatteryChargingPowerValues = (entries: BatteryState[]) => {
     let series: any[] = [];
     entries.forEach((entry: BatteryState) => {
-      series.push({name: entry.timestamp, value: !entry.batteryChargingPower ? 0 : entry.batteryChargingPower})
+      series.push(
+        {
+          name: entry.timestamp,
+          value: !entry.batteryChargingPower || entry.batteryChargingPower<0 ? 0 : entry.batteryChargingPower
+        }
+      )
     })
     this.batteryChargingPowerValues.push(
       {"name": "Ladeleistung", "series": [...series]}

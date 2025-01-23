@@ -8,7 +8,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.tobkir.logic.services.ModbusReaderService;
-import org.tobkir.logic.services.ModbusValueService;
 
 @Path("/rest/v1/api/general")
 @Consumes(MediaType.APPLICATION_JSON)

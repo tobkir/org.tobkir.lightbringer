@@ -12,6 +12,8 @@ public class ModbusValueContainer {
     private float actualPVPower;
     private int batteryChargingPower;
     private float dailyYield;
+    private float monthlyYield;
+    private float yearlyYield;
     private ZonedDateTime timestamp;
 
     public ModbusValueContainer() {
@@ -67,36 +69,6 @@ public class ModbusValueContainer {
     }
 
     // Updated equals, hashCode, and toString methods
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ModbusValueContainer that = (ModbusValueContainer) o;
-        return batteryChargingState == that.batteryChargingState &&
-                Float.compare(that.consumptionFromBattery, consumptionFromBattery) == 0 &&
-                Float.compare(that.consumptionFromGrid, consumptionFromGrid) == 0 &&
-                Float.compare(that.consumptionFromPV, consumptionFromPV) == 0 &&
-                Float.compare(that.actualPVPower, actualPVPower) == 0 &&
-                Objects.equals(timestamp, that.timestamp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(batteryChargingState, consumptionFromBattery, consumptionFromGrid, consumptionFromPV, actualPVPower, timestamp);
-    }
-
-    @Override
-    public String toString() {
-        return "ModbusValueContainer{" +
-                "batteryChargingState=" + batteryChargingState +
-                ", consumptionFromBattery=" + consumptionFromBattery +
-                ", consumptionFromGrid=" + consumptionFromGrid +
-                ", consumptionFromPV=" + consumptionFromPV +
-                ", actualPVPower=" + actualPVPower +
-                ", timestamp=" + timestamp +
-                '}';
-    }
-
     public int getBatteryChargingPower() {
         return batteryChargingPower;
     }
@@ -111,5 +83,49 @@ public class ModbusValueContainer {
 
     public void setDailyYield(float dailyYield) {
         this.dailyYield = dailyYield;
+    }
+
+    public float getMonthlyYield() {
+        return monthlyYield;
+    }
+
+    public void setMonthlyYield(float monthlyYield) {
+        this.monthlyYield = monthlyYield;
+    }
+
+    public float getYearlyYield() {
+        return yearlyYield;
+    }
+
+    public void setYearlyYield(float yearlyYield) {
+        this.yearlyYield = yearlyYield;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ModbusValueContainer that = (ModbusValueContainer) o;
+        return batteryChargingState == that.batteryChargingState && Float.compare(consumptionFromBattery, that.consumptionFromBattery) == 0 && Float.compare(consumptionFromGrid, that.consumptionFromGrid) == 0 && Float.compare(consumptionFromPV, that.consumptionFromPV) == 0 && Float.compare(actualPVPower, that.actualPVPower) == 0 && batteryChargingPower == that.batteryChargingPower && Float.compare(dailyYield, that.dailyYield) == 0 && Float.compare(monthlyYield, that.monthlyYield) == 0 && Float.compare(yearlyYield, that.yearlyYield) == 0 && Objects.equals(timestamp, that.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(batteryChargingState, consumptionFromBattery, consumptionFromGrid, consumptionFromPV, actualPVPower, batteryChargingPower, dailyYield, monthlyYield, yearlyYield, timestamp);
+    }
+
+    @Override
+    public String toString() {
+        return "ModbusValueContainer{" +
+                "batteryChargingState=" + batteryChargingState +
+                ", consumptionFromBattery=" + consumptionFromBattery +
+                ", consumptionFromGrid=" + consumptionFromGrid +
+                ", consumptionFromPV=" + consumptionFromPV +
+                ", actualPVPower=" + actualPVPower +
+                ", batteryChargingPower=" + batteryChargingPower +
+                ", dailyYield=" + dailyYield +
+                ", monthlyYield=" + monthlyYield +
+                ", yearlyYield=" + yearlyYield +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

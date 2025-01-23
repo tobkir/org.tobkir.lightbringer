@@ -5,6 +5,7 @@ import {ModbusValueContainer} from "../../model/modbus-value-container.model";
 import {BatteryState} from "../../model/battery-state.model";
 import {PvState} from "../../model/pv-state.model";
 import {PvConsumption} from "../../model/pv-consumption.model";
+import {ConsumptionState} from "../../model/consumption-state.model";
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,8 @@ export class BackendValueService {
 
   getPvConsumptionStates(url: string, params: HttpParams) {
     return this.httpClient.get<PvConsumption[]>(url, {params});
+  }
+  getConsumptionStates(url: string, params: HttpParams) {
+    return this.httpClient.get<ConsumptionState[]>(url, {params});
   }
 }

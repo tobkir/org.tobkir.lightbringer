@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setValues = () => {
     let sub = this.valueService.getLatestValues().subscribe(entry => {
-      let totalConsumption = (entry.consumptionFromPV + entry.consumptionFromBattery + entry.consumptionFromGrid)
+      let totalConsumption = (entry.consumptionFromPV + entry.consumptionFromBattery + Math.abs(entry.consumptionFromGrid))
       let values = [
         {name: "PV Leistung", value: entry.actualPVPower},
         {name: "Verbrauch gesamt", value: totalConsumption}

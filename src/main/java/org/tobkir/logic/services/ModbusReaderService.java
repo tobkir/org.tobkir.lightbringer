@@ -66,10 +66,9 @@ public class ModbusReaderService {
             values.setConsumptionFromPV(readConsumptionFromPV());
             values.setConsumptionFromGrid(readConsumptionFromGrid());
             values.setBatteryChargingPower(-readBatteryChargingPowerCurrent());
-//            logger.info("Speicher_Firmware: {}", readBatteryFirmware());
-//            logger.info("Speicher_Kapazität: {}", readBatteryCapacity());
             values.setDailyYield(readDailyYield());
-            logger.info("Energy Scale Factor: {}", readDailyYield());
+            values.setMonthlyYield(readMonthlyYield());
+            values.setYearlyYield(readYearlyYield());
             return values;
         }).exceptionally(ex -> {
             // Fehlerbehandlung
@@ -77,6 +76,7 @@ public class ModbusReaderService {
             throw new RuntimeException("Fehler beim Starten der Modbus-Verbindung", ex);
         }).whenComplete((result, throwable) -> {
             // Verbindung schließen, egal ob erfolgreich oder fehlerhaft
+            logger.info("Connection closed");
             client.stop();
         });
     }
@@ -132,5 +132,14 @@ public class ModbusReaderService {
     private float readDailyYield() {
         return modbusReader.readFloat(322
         );
+    }
+
+    private float readYearlyYield() {
+        logger.info("Read Yearly Yield {}", modbusReader.readFloat(324));
+        return modbusReader.readFloat(324);
+    }
+    private float readMonthlyYield() {
+        logger.info("Read Monthly Yield {}", modbusReader.readFloat(324));
+        return modbusReader.readFloat(326);
     }
 }

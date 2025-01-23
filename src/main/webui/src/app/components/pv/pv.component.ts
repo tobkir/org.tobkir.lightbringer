@@ -5,7 +5,7 @@ import {PvState} from "../../model/pv-state.model";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {NgIf} from "@angular/common";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
+import {MatCard, MatCardAvatar, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {PvConsumption} from "../../model/pv-consumption.model";
 import {ModbusValueContainer} from "../../model/modbus-value-container.model";
@@ -23,7 +23,9 @@ import {MathService} from "../../services/utils/math.service";
     MatCardTitle,
     MatCardContent,
     MatIcon,
-    NumberCardModule
+    NumberCardModule,
+    MatCardAvatar,
+    MatCardHeader
   ],
   templateUrl: './pv.component.html',
   styleUrl: './pv.component.scss'

@@ -1,76 +1,81 @@
-<div class="container" style="text-align:center; height: 80vh">
-  <div fxLayout="row">
-    <div fxFlex="98%" fxLayout="column" fxLayoutGap="16px">
-      <div fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title>
-              <mat-icon>wb_sunny</mat-icon>
-              PV-Leistung
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner color="secondary" mode="indeterminate" *ngIf="values.length < 1">
-              </mat-spinner>
-              <ngx-charts-area-chart
-                *ngIf="values.length >=1"
-                [scheme]="colorScheme"
-                [legend]="false"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxis]="xAxis"
-                [yAxis]="yAxis"
-                [yAxisLabel]="yAxisLabelPower"
-                [timeline]="timeline"
-                [results]="values"
-                [activeEntries]="values"
-                [gradient]="true"
-              >
-              </ngx-charts-area-chart>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title>
-              <mat-icon>show_chart</mat-icon>
-              Verbrauch aus PV
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner color="secondary" mode="indeterminate" *ngIf="consumptionValues.length < 1">
-              </mat-spinner>
-              <ngx-charts-area-chart
-                *ngIf="consumptionValues.length >=1"
-                [scheme]="colorSchemeConsumption"
-                [legend]="false"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxis]="xAxis"
-                [yAxis]="yAxis"
-                [yAxisLabel]="yAxisLabelConsumption"
-                [timeline]="timeline"
-                [results]="consumptionValues"
-                [activeEntries]="consumptionValues"
-                [gradient]="true"
-              >
-              </ngx-charts-area-chart>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title>
-              <mat-icon>show_chart</mat-icon>
-              Statistik
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner color="secondary" mode="indeterminate"
-                           *ngIf="!statisticValues">
-              </mat-spinner>
-              <div *ngIf="statisticValues">
-                <p>Heute erzeugt: {{ mathService.round(statisticValues.dailyYield/1000, 2) }} kWh</p>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
+<div class="flex-container" fxLayout="column"
+     fxLayoutAlign="center center" style="max-height: 80vh">
+  <div class="flex-container" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px">
+    <div fxFlex="none">
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>wb_sunny</mat-icon>
+          <mat-card-title>
+            PV-Leistung
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-spinner color="secondary" mode="indeterminate" *ngIf="values.length < 1">
+          </mat-spinner>
+          <ngx-charts-area-chart
+            *ngIf="values.length >=1"
+            [scheme]="colorScheme"
+            [legend]="false"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisLabelPower"
+            [timeline]="timeline"
+            [results]="values"
+            [activeEntries]="values"
+            [gradient]="true"
+          >
+          </ngx-charts-area-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="none">
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>show_chart</mat-icon>
+          <mat-card-title>
+            Verbrauch aus PV
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-spinner color="secondary" mode="indeterminate" *ngIf="consumptionValues.length < 1">
+          </mat-spinner>
+          <ngx-charts-area-chart
+            *ngIf="consumptionValues.length >=1"
+            [scheme]="colorSchemeConsumption"
+            [legend]="false"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisLabelConsumption"
+            [timeline]="timeline"
+            [results]="consumptionValues"
+            [activeEntries]="consumptionValues"
+            [gradient]="true"
+          >
+          </ngx-charts-area-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="none">
+      <mat-card>
+        <mat-card-header>
+          <mat-icon mat-card-avatar>show_chart</mat-icon>
+          <mat-card-title>
+            Statistik
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-spinner color="secondary" mode="indeterminate"
+                       *ngIf="!statisticValues">
+          </mat-spinner>
+          <div *ngIf="statisticValues">
+            <p>Heute erzeugt: {{ mathService.round(statisticValues.dailyYield / 1000, 2) }} kWh</p>
+            <p>Diesen Monat erzeugt: {{ mathService.round(statisticValues.monthlyYield / 1000, 2) }} kWh</p>
+            <p>Dieses Jahr erzeugt: {{ mathService.round(statisticValues.yearlyYield / 1000, 2) }} kWh</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

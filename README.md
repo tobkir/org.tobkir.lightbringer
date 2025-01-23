@@ -1,6 +1,6 @@
-# Lightbringer
+# SICAS
 
-Lightbringer ist eine Lösung, um Modbus-Informationen von Plenticore plus 10 auszulesen und in einem Angular-Frontend darzustellen.
+SICAS ist eine Lösung, um Modbus-Informationen von Plenticore plus 10 auszulesen und in einem Angular-Frontend darzustellen.
 
 ![img.png](img.png)
 ## Features

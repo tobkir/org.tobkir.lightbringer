@@ -3,17 +3,10 @@ package org.tobkir.logic.services;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.tobkir.logic.persistence.ModbusValueDAO;
-import org.tobkir.model.BatteryState;
-import org.tobkir.model.ModbusValueEntity;
-import org.tobkir.model.PvConsumptionState;
-import org.tobkir.model.PvPowerState;
+import org.tobkir.model.*;
 
-import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Service class for handling operations related to Modbus values.
@@ -24,10 +17,12 @@ import java.util.stream.Collectors;
 public class ModbusValueService {
 
     private final ModbusValueDAO modbusValueDAO;
+    private final ConsumptionService consumptionService;
 
     @Inject
-    public ModbusValueService(ModbusValueDAO modbusValueDAO) {
+    public ModbusValueService(ModbusValueDAO modbusValueDAO, ConsumptionService consumptionService) {
         this.modbusValueDAO = modbusValueDAO;
+        this.consumptionService = consumptionService;
     }
 
 
@@ -35,9 +30,23 @@ public class ModbusValueService {
         return modbusValueDAO.findAll();
     }
 
+    public List<ConsumptionState> getAllConsumptionsByDateRange(ZonedDateTime start, ZonedDateTime end) {
+        List<ConsumptionState> consumptionStates = modbusValueDAO.findAllConsumptionsByDateRange(start, end);
+        consumptionStates.forEach(state -> {
+            state.setTotalConsumption(
+                    state.getConsumptionFromBattery() +
+                            state.getConsumptionFromGrid() +
+                            state.getConsumptionFromPV()
+            );
+        });
+        consumptionStates.forEach(state -> {
+            state.setTotalDailyConsumption(consumptionService.calculateDailyConsumption(consumptionStates, start));
+        });
+        return consumptionStates;
+    }
+
     public List<BatteryState> getAllBatteryChargingStates(ZonedDateTime start, ZonedDateTime end) {
         return modbusValueDAO.findAllBatteryChargingStates(start, end);
-
     }
 
     public List<Float> getAllConsumptionFromBattery() {

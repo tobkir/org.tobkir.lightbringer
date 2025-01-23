@@ -32,6 +32,8 @@ public class ModbusValueMapper {
         entity.setConsumptionFromPV(container.getConsumptionFromPV());
         entity.setActualPVPower(container.getActualPVPower());
         entity.setDailyYield(container.getDailyYield());
+        entity.setMonthlyYield(container.getMonthlyYield());
+        entity.setYearlyYield(container.getYearlyYield());
         entity.setTimestamp(container.getTimestamp());
         return entity;
     }
@@ -55,6 +57,8 @@ public class ModbusValueMapper {
         container.setTimestamp(entity.getTimestamp());
         container.setBatteryChargingPower(entity.getBatteryChargingPower());
         container.setDailyYield(entity.getDailyYield());
+        container.setMonthlyYield(entity.getMonthlyYield());
+        container.setYearlyYield(entity.getMonthlyYield());
         return container;
     }
 }

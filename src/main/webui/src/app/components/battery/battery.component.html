@@ -1,156 +1,145 @@
-<div class="container" style="height: auto; width: 95%">
-  <div fxLayout="row">
-    <div fxFlex="100%" fxLayout="column" fxLayoutGap="16px">
-      <div fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title style="text-align: center">
-              <mat-icon>battery_full</mat-icon>
-              Akkustand
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
-              <ngx-charts-area-chart
-                *ngIf="values.length >=1"
-                [scheme]="stateColorScheme"
-                [legend]="legend"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxis]="xAxis"
-                [yAxis]="yAxis"
-                [yAxisLabel]="yAxisStateLabel"
-                [timeline]="timeline"
-                [results]="values"
-                [activeEntries]="values"
-                [animations]="animations"
-                [gradient]="true"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)"
-              >
-              </ngx-charts-area-chart>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title style="text-align: center">
-              <mat-icon>battery_charging_full</mat-icon>
-              Ladeleistung
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
-              <ngx-charts-area-chart
-                *ngIf="batteryChargingPowerValues.length >=1"
-                [scheme]="powerColorScheme"
-                [legend]="legend"
-                [showYAxisLabel]="showYAxisLabel"
-                [xAxis]="xAxis"
-                [yAxis]="yAxis"
-                [yAxisLabel]="yAxisPowerLabel"
-                [timeline]="timeline"
-                [results]="batteryChargingPowerValues"
-                [activeEntries]="batteryChargingPowerValues"
-                [animations]="animations"
-                [gradient]="true"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)"
-              >
-              </ngx-charts-area-chart>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title  style="text-align: center">
-              <mat-icon>show_chart</mat-icon>
-              Verbrauch aus Speicher
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner *ngIf="consumptionValues.length < 1" mode="indeterminate"></mat-spinner>
-              <ngx-charts-area-chart
-                *ngIf="consumptionValues.length >=1"
-                [scheme]="consumptionColorScheme"
-                [legend]="legend"
-                [showYAxisLabel]="true"
-                [xAxis]="xAxis"
-                [yAxis]="yAxis"
-                [yAxisLabel]="yAxisConsumptionLabel"
-                [timeline]="timeline"
-                [results]="consumptionValues"
-                [activeEntries]="consumptionValues"
-                [animations]="animations"
-                [gradient]="true"
-                (select)="onSelect($event)"
-                (activate)="onActivate($event)"
-                (deactivate)="onDeactivate($event)"
-              >
-              </ngx-charts-area-chart>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-      <div fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title style="text-align: center">
-              <mat-icon>battery_unknown</mat-icon>
-              Aktueller Akkustand
-            </mat-card-title>
-            <mat-card-content>
-              <mat-spinner *ngIf="batteryInfoValues.length < 1" mode="indeterminate"></mat-spinner>
-              <div style="height: 100%; width: 100%">
-                <ngx-charts-pie-chart
-                  *ngIf="batteryInfoValues.length >= 1"
-                  style="height: 100%; width: 100%"
-                  [results]="batteryInfoValues"
-                  [activeEntries]="batteryInfoValues"
-                  [scheme]="stateColorScheme"
-                  [labels]="true"
-                  [legend]="false"
-                  [gradient]="true"
-                  [legendTitle]="''"
-                  [legendPosition]="LegendPosition.Below"
-                  [doughnut]="false"
-                >
-                </ngx-charts-pie-chart>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-        <div fxFlex="33%">
-          <mat-card>
-            <mat-card-title style="text-align: center">
-              <mat-icon>information</mat-icon>
-            </mat-card-title>
-            <mat-spinner *ngIf="!latestValue" mode="indeterminate"></mat-spinner>
-            <mat-card-content *ngIf="latestValue">
-              <p [ngStyle]="{color: latestValue.batteryChargingPower < 0 ? '#a83849':'#4cf394' }">Aktuelle Ladeleistung:
-                {{ latestValue.batteryChargingPower > 0 ? "Wird mit " + mathService.round(latestValue.batteryChargingPower / 1000, 2) + " kW geladen" : "Wird mit " + latestValue.batteryChargingPower + "W entladen" }}
-              </p>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
+<div class="flex-container" fxLayout="column"
+     fxLayoutAlign="center center" style="max-height: 80vh">
+  <div class="flex-container" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px">
+    <div fxFlex="none">
+      <mat-card>
+        <mat-calendar-header>
+          <mat-icon matCardAvatar>battery_full</mat-icon>
+          <mat-card-title style="text-align: center">
+            Akkustand
+          </mat-card-title>
+        </mat-calendar-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
+          <ngx-charts-area-chart
+            *ngIf="values.length >=1"
+            [scheme]="stateColorScheme"
+            [legend]="legend"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisStateLabel"
+            [timeline]="timeline"
+            [results]="values"
+            [activeEntries]="values"
+            [animations]="animations"
+            [gradient]="true"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+          >
+          </ngx-charts-area-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="none">
+      <mat-card>
+        <mat-calendar-header>
+          <mat-icon matCardAvatar>battery_charging_full</mat-icon>
+          <mat-card-title style="text-align: center">
+            Ladeleistung
+          </mat-card-title>
+        </mat-calendar-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
+          <ngx-charts-area-chart
+            *ngIf="batteryChargingPowerValues.length >=1"
+            [scheme]="powerColorScheme"
+            [legend]="legend"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisPowerLabel"
+            [timeline]="timeline"
+            [results]="batteryChargingPowerValues"
+            [activeEntries]="batteryChargingPowerValues"
+            [animations]="animations"
+            [gradient]="true"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+          >
+          </ngx-charts-area-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="none">
+      <mat-card>
+        <mat-calendar-header>
+          <mat-icon matCardAvatar>show_chart</mat-icon>
+          <mat-card-title style="text-align: center">
+            Verbrauch aus Speicher
+          </mat-card-title>
+        </mat-calendar-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="consumptionValues.length < 1" mode="indeterminate"></mat-spinner>
+          <ngx-charts-area-chart
+            *ngIf="consumptionValues.length >=1"
+            [scheme]="consumptionColorScheme"
+            [legend]="legend"
+            [showYAxisLabel]="true"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [yAxisLabel]="yAxisConsumptionLabel"
+            [timeline]="timeline"
+            [results]="consumptionValues"
+            [activeEntries]="consumptionValues"
+            [animations]="animations"
+            [gradient]="true"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+          >
+          </ngx-charts-area-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutGap="16px">
+    <div fxFlex="none">
+      <mat-card>
+        <mat-calendar-header>
+          <mat-icon matCardAvatar>battery_unknown</mat-icon>
+          <mat-card-title style="text-align: center">
+            Aktueller Akkustand
+          </mat-card-title>
+        </mat-calendar-header>
+        <mat-card-content>
+          <mat-spinner *ngIf="batteryInfoValues.length < 1" mode="indeterminate"></mat-spinner>
+          <div style="height: 100%; width: 100%">
+            <ngx-charts-pie-chart
+              *ngIf="batteryInfoValues.length >= 1"
+              style="height: 100%; width: 100%"
+              [results]="batteryInfoValues"
+              [activeEntries]="batteryInfoValues"
+              [scheme]="stateColorScheme"
+              [labels]="true"
+              [legend]="false"
+              [gradient]="true"
+              [legendTitle]="''"
+              [legendPosition]="LegendPosition.Below"
+              [doughnut]="false"
+            >
+            </ngx-charts-pie-chart>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div fxFlex="none">
+      <mat-card>
+        <mat-calendar-header>
+          <mat-icon matCardAvatar>information</mat-icon>
+          <mat-card-title style="text-align: center">
+            Informationen
+          </mat-card-title>
+        </mat-calendar-header>
+        <mat-spinner *ngIf="!latestValue" mode="indeterminate"></mat-spinner>
+        <mat-card-content *ngIf="latestValue">
+          <p [ngStyle]="{color: latestValue.batteryChargingPower < 0 ? '#a83849':'#4cf394' }">Aktuelle Ladeleistung:
+            {{ latestValue.batteryChargingPower > 0 ? "Wird mit " + mathService.round(latestValue.batteryChargingPower / 1000, 2) + " kW geladen" : "Wird mit " + latestValue.batteryChargingPower + "W entladen" }}
+          </p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
-<!--<div class="container" style="height: 25vh; width: 97%">-->
-<!--  <mat-spinner *ngIf="latestValue.length < 1" mode="indeterminate"></mat-spinner>-->
-
-<!--  <ngx-charts-number-card *ngIf="latestValue.length > 0"-->
-<!--                          [results]="latestValue"-->
-<!--                          [scheme]="powerColorScheme"-->
-<!--                          [cardColor]="cardColor">-->
-<!--  </ngx-charts-number-card>-->
-<!--</div>-->
-
-<!--<div class="container" style="height: 25vh; width: 97%">-->
-<!--  <mat-spinner *ngIf="batteryInfoValues.length < 1" mode="indeterminate"></mat-spinner>-->
-
-<!--  <ngx-charts-number-card *ngIf="batteryInfoValues.length > 0"-->
-<!--                          [results]="batteryInfoValues"-->
-<!--                          [scheme]="powerColorScheme"-->
-<!--                          [cardColor]="cardColor">-->
-<!--  </ngx-charts-number-card>-->
-<!--</div>-->

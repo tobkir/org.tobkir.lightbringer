@@ -42,4 +42,11 @@
             <column name="DAILYYIELD" type="FLOAT"/>
         </addColumn>
     </changeSet>
+
+    <changeSet id="4-add-Monthly-and-Yearly-Yield" author="tobkir">
+        <addColumn tableName="modbus_values">
+            <column name="MONTHLYYIELD" type="FLOAT"/>
+            <column name="YEARLYYIELD" type="FLOAT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

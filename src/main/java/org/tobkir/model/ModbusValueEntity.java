@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +28,8 @@ public class ModbusValueEntity {
     private float actualPVPower;
     private int batteryChargingPower;
     private float dailyYield;
+    private float monthlyYield;
+    private float yearlyYield;
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime timestamp;
 
@@ -34,15 +37,17 @@ public class ModbusValueEntity {
     public ModbusValueEntity() {
     }
 
-    public ModbusValueEntity(ModbusValueContainer container, int batteryChargingPower, float dailyYield) {
-        this.batteryChargingState = container.getBatteryChargingState();
-        this.consumptionFromBattery = container.getConsumptionFromBattery();
-        this.consumptionFromGrid = container.getConsumptionFromGrid();
-        this.consumptionFromPV = container.getConsumptionFromPV();
-        this.actualPVPower = container.getActualPVPower();
-        this.timestamp = container.getTimestamp();
+    public ModbusValueEntity(UUID id, int batteryChargingState, float consumptionFromBattery, float consumptionFromGrid, float consumptionFromPV, float actualPVPower, int batteryChargingPower, float dailyYield, float monthlyYield, float yearlyYield) {
+        this.id = id;
+        this.batteryChargingState = batteryChargingState;
+        this.consumptionFromBattery = consumptionFromBattery;
+        this.consumptionFromGrid = consumptionFromGrid;
+        this.consumptionFromPV = consumptionFromPV;
+        this.actualPVPower = actualPVPower;
         this.batteryChargingPower = batteryChargingPower;
         this.dailyYield = dailyYield;
+        this.monthlyYield = monthlyYield;
+        this.yearlyYield = yearlyYield;
     }
 
     // Getters and setters
@@ -106,21 +111,42 @@ public class ModbusValueEntity {
         this.batteryChargingPower = batteryChargingPower;
     }
 
-    // equals and hashCode methods
+    public float getDailyYield() {
+        return dailyYield;
+    }
+
+    public void setDailyYield(float dailyYield) {
+        this.dailyYield = dailyYield;
+    }
+
+    public float getMonthlyYield() {
+        return monthlyYield;
+    }
+
+    public void setMonthlyYield(float monthlyYield) {
+        this.monthlyYield = monthlyYield;
+    }
+
+    public float getYearlyYield() {
+        return yearlyYield;
+    }
+
+    public void setYearlyYield(float yearlyYield) {
+        this.yearlyYield = yearlyYield;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ModbusValueEntity that = (ModbusValueEntity) o;
-        return id != null && id.equals(that.id);
+        return batteryChargingState == that.batteryChargingState && Float.compare(consumptionFromBattery, that.consumptionFromBattery) == 0 && Float.compare(consumptionFromGrid, that.consumptionFromGrid) == 0 && Float.compare(consumptionFromPV, that.consumptionFromPV) == 0 && Float.compare(actualPVPower, that.actualPVPower) == 0 && batteryChargingPower == that.batteryChargingPower && Float.compare(dailyYield, that.dailyYield) == 0 && Float.compare(monthlyYield, that.monthlyYield) == 0 && Float.compare(yearlyYield, that.yearlyYield) == 0 && Objects.equals(id, that.id) && Objects.equals(timestamp, that.timestamp);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hash(id, batteryChargingState, consumptionFromBattery, consumptionFromGrid, consumptionFromPV, actualPVPower, batteryChargingPower, dailyYield, monthlyYield, yearlyYield, timestamp);
     }
 
-    // toString method
     @Override
     public String toString() {
         return "ModbusValueEntity{" +
@@ -131,15 +157,10 @@ public class ModbusValueEntity {
                 ", consumptionFromPV=" + consumptionFromPV +
                 ", actualPVPower=" + actualPVPower +
                 ", batteryChargingPower=" + batteryChargingPower +
+                ", dailyYield=" + dailyYield +
+                ", monthlyYield=" + monthlyYield +
+                ", yearlyYield=" + yearlyYield +
                 ", timestamp=" + timestamp +
                 '}';
-    }
-
-    public float getDailyYield() {
-        return dailyYield;
-    }
-
-    public void setDailyYield(float dailyYield) {
-        this.dailyYield = dailyYield;
     }
 }

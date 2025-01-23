@@ -1,15 +1,12 @@
 package org.tobkir.logic.persistence;
 
 
-import org.tobkir.model.BatteryState;
-import org.tobkir.model.ModbusValueEntity;
+import org.tobkir.model.*;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.tobkir.model.PvConsumptionState;
-import org.tobkir.model.PvPowerState;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -23,6 +20,17 @@ public class ModbusValueJpaDAOImpl implements ModbusValueDAO {
     @Override
     public List<ModbusValueEntity> findAll() {
         return em.createQuery("SELECT m FROM ModbusValueEntity m", ModbusValueEntity.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<ConsumptionState> findAllConsumptionsByDateRange(ZonedDateTime start, ZonedDateTime end) {
+        return em.createQuery("SELECT m.consumptionFromBattery, " +
+                        "m.consumptionFromGrid," +
+                        "m.consumptionFromPV," +
+                        "m.timestamp FROM ModbusValueEntity m WHERE m.timestamp BETWEEN :start AND :end", ConsumptionState.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getResultList();
     }
 

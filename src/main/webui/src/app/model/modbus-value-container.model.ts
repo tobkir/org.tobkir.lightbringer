@@ -1,4 +1,18 @@
 export class ModbusValueContainer {
+  get yearlyYield(): number {
+    return this._yearlyYield;
+  }
+
+  set yearlyYield(value: number) {
+    this._yearlyYield = value;
+  }
+  get monthlyYield(): number {
+    return this._monthlyYield;
+  }
+
+  set monthlyYield(value: number) {
+    this._monthlyYield = value;
+  }
   private _batteryChargingState: number;
   private _batteryChargingPower: number;
   private _consumptionFromBattery: number;
@@ -6,6 +20,8 @@ export class ModbusValueContainer {
   private _consumptionFromPV: number;
   private _actualPVPower: number;
   private _dailyYield: number;
+  private _monthlyYield: number;
+  private _yearlyYield: number;
   private _timestamp: Date;
 
   constructor() {
@@ -16,6 +32,8 @@ export class ModbusValueContainer {
     this._consumptionFromPV = 0.0;
     this._actualPVPower = 0.0;
     this._dailyYield = 0.0;
+    this._monthlyYield = 0.0;
+    this._yearlyYield = 0.0;
     this._timestamp = new Date(); // Set current time as default
   }
 

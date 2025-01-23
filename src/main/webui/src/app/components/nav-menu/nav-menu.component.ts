@@ -1,17 +1,19 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AsyncPipe } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {AsyncPipe, NgIf, NgOptimizedImage} from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {GeneralInfoService} from "../../services/logic/general-info.service";
 import {GeneralInfoContainer} from "../../model/general-info-container.model";
+import {MatExpansionPanel, MatExpansionPanelTitle,MatExpansionPanelHeader} from "@angular/material/expansion";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @Component({
   selector: 'app-nav-menu',
@@ -30,10 +32,17 @@ import {GeneralInfoContainer} from "../../model/general-info-container.model";
     MatMenuTrigger,
     MatMenu,
     MatMenuItem,
+    NgOptimizedImage,
+    NgIf,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelHeader,
+    MatGridList,
+    MatGridTile,
   ]
 })
-export class NavMenuComponent implements OnInit{
-  ip:GeneralInfoContainer = new GeneralInfoContainer("");
+export class NavMenuComponent implements OnInit {
+  ip: GeneralInfoContainer = new GeneralInfoContainer("");
   private breakpointObserver = inject(BreakpointObserver);
 
   constructor(
@@ -42,8 +51,8 @@ export class NavMenuComponent implements OnInit{
   }
 
   ngOnInit(): void {
-        this.getIp();
-    }
+    this.getIp();
+  }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -52,8 +61,11 @@ export class NavMenuComponent implements OnInit{
     );
 
   private getIp() {
+    setTimeout( () => {
+
+    })
     this.generalInfoService.getIp().subscribe(
-      ip => this.ip=ip
+      ip => this.ip = ip
     )
   }
 }

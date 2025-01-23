@@ -1,16 +1,33 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" style="padding: 5px">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>
+      Menü
+    </mat-toolbar>
     <mat-nav-list>
-      <button mat-button [routerLink]="'/home'"><mat-icon>home</mat-icon> Home</button>
-      <button mat-button [matMenuTriggerFor]="batteryMenu"><mat-icon>assessment</mat-icon> Statistiken</button>
+      <a mat-list-item [routerLink]="'/home'">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemLine>Home</span>
+      </a>
+      <a mat-list-item [matMenuTriggerFor]="batteryMenu">
+        <mat-icon matListItemIcon>assessment</mat-icon>
+        <span matListItemLine>Statistiken</span>
+      </a>
       <mat-menu #batteryMenu="matMenu">
-        <button mat-menu-item [routerLink]="'/pv'"><mat-icon>wb_sunny</mat-icon> PV</button>
-        <button mat-menu-item [routerLink]="'/battery'"><mat-icon>battery_full</mat-icon> Speicher</button>
-        <button mat-menu-item [routerLink]="'/consumption'"><mat-icon> pie_chart</mat-icon> Verbrauch</button>
+        <a mat-list-item [routerLink]="'/pv'">
+          <mat-icon matListItemIcon>wb_sunny</mat-icon>
+          <span matListItemLine>PV</span>
+        </a>
+        <a mat-list-item [routerLink]="'/battery'">
+          <mat-icon matListItemIcon>battery_full</mat-icon>
+          <span matListItemLine>Speicher</span>
+        </a>
+        <a mat-list-item [routerLink]="'/consumption'">
+          <mat-icon matListItemIcon>pie_chart</mat-icon>
+          <span matListItemLine>Verbrauch</span>
+        </a>
       </mat-menu>
     </mat-nav-list>
   </mat-sidenav>
@@ -25,11 +42,14 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       }
-      <span>
-        <mat-icon>device_hub</mat-icon> SICAS on
-        <mat-icon *ngIf="ip">storage</mat-icon> {{ip?this.ip.ip:""}}
-      </span>
+      <ng-container style="width: 200px; height: 200px">
+      </ng-container>
     </mat-toolbar>
+    <mat-grid-list cols="1" rowHeight="200px">
+      <mat-grid-tile>
+        <img ngSrc="assets/sicas_logo.png" height="200" width="200" alt="logo"/>
+      </mat-grid-tile>
+    </mat-grid-list>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
