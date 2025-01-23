@@ -44,8 +44,8 @@ export class ConsumptionComponent implements OnInit{
   yAxisLabelConsumption: string = 'Verbrauch';
   timeline: boolean = true;
 
-  startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()-1, 0, 0, 0, 0);
-  endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()-1, 23, 59, 59, 999);
+  startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
+  endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
 
   colorSchemeConsumption: Color = {
     name: "consumption", selectable: true, group: ScaleType.Linear,
