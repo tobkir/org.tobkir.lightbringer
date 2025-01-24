@@ -1,25 +1,26 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueService} from "../../services/logic/value.service";
 // import {AreaChartModule, Color, ScaleType} from "@swimlane/ngx-charts";
-import {FlexModule} from "@angular/flex-layout";
 import {
   MatCard,
   MatCardAvatar,
   MatCardContent,
   MatCardHeader,
   MatCardSubtitle,
-  MatCardTitle
+  MatCardTitle,
 } from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {DatePipe, NgIf} from "@angular/common";
 import {ConsumptionState} from "../../model/consumption-state.model";
+import {ChartData, ChartConfiguration, ChartType} from 'chart.js';
+import {BaseChartDirective} from 'ng2-charts';
+import {lineChartOptions} from "../../chart-options/LineChartOptions";
 
 @Component({
   selector: 'app-consumption',
   standalone: true,
   imports: [
-    FlexModule,
     MatCard,
     MatCardContent,
     MatCardTitle,
@@ -29,7 +30,8 @@ import {ConsumptionState} from "../../model/consumption-state.model";
     MatCardHeader,
     MatCardSubtitle,
     MatCardAvatar,
-    DatePipe
+    DatePipe,
+    BaseChartDirective,
   ],
   templateUrl: './consumption.component.html',
   styleUrl: './consumption.component.scss'
@@ -37,12 +39,8 @@ import {ConsumptionState} from "../../model/consumption-state.model";
 export class ConsumptionComponent implements OnInit {
   //TODO Config mit Constructor
   animations: boolean = true;
-  xAxis: boolean = false;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  yAxisLabelConsumption: string = 'Verbrauch';
-  timeline: boolean = true;
-
+  public lineChartChartType: ChartType = 'line';
+  public lineChartData: ChartConfiguration['data'] = {labels: [], datasets: []}
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
   endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
 
@@ -50,21 +48,34 @@ export class ConsumptionComponent implements OnInit {
   //   name: "consumption", selectable: true, group: ScaleType.Linear,
   //   domain: ['#a83849', '#4cf394']
   // };
-  values: any[] = [];
+
 
   constructor(private valueService: ValueService) {
   }
 
   ngOnInit(): void {
     this.valueService.getConsumptionStates(this.startOfDay, this.endOfDay).subscribe(values => {
-      let series: any[] = [];
+      let series: number[] = [];
+      let labels: string[] = [];
 
       values.forEach((entry: ConsumptionState) => {
-        series.push({name: entry.timestamp, value: entry.totalConsumption})
+        labels.push(entry.timestamp.toString())
+        series.push(entry.totalConsumption)
       })
-      this.values.push(
-        {name: "Verbrauch", series: [...series]}
-      );
+
+
+      this.lineChartData =
+        {
+          labels: [...labels], datasets: [{
+            data: [...series],
+            label: 'Series A',
+            backgroundColor: 'rgba(37,228,177,0.35)',
+            hoverBackgroundColor: 'rgba(37,228,177,0.45)',
+            fill: 'origin'
+          }]
+        }
     })
   }
+
+  protected readonly lineChartOptions = lineChartOptions;
 }

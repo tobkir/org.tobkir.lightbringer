@@ -3,13 +3,13 @@ import {NgIf, NgStyle} from "@angular/common";
 import {ValueService} from "../../services/logic/value.service";
 import {BatteryState} from "../../model/battery-state.model";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatCard, MatCardAvatar, MatCardContent, MatCardTitle} from "@angular/material/card";
+import {MatCard, MatCardAvatar, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
-import {FlexModule} from "@angular/flex-layout";
 import {ModbusValueContainer} from 'src/app/model/modbus-value-container.model';
-import {BatteryInfoContainer} from "../../model/battery-info-container.model";
 import {MathService} from "../../services/utils/math.service";
-import {MatCalendarHeader} from "@angular/material/datepicker";
+import {BaseChartDirective} from 'ng2-charts';
+import {ChartConfiguration, ChartType} from 'chart.js';
+import {pieChartOptions} from "../../chart-options/PieChartOptions";
 
 @Component({
   selector: 'app-battery',
@@ -20,10 +20,10 @@ import {MatCalendarHeader} from "@angular/material/datepicker";
     MatCardTitle,
     MatCardContent,
     MatIcon,
-    FlexModule,
     NgStyle,
-    MatCalendarHeader,
-    MatCardAvatar
+    MatCardHeader,
+    MatCardAvatar,
+    BaseChartDirective
   ],
   standalone: true,
   templateUrl: './battery.component.html',
@@ -33,6 +33,7 @@ export class BatteryComponent implements OnInit {
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
   endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
   requestBatteryStateInterval: any;
+  protected readonly pieChartOptions = pieChartOptions;
   // powerColorScheme: Color = {
   //   name: "power", selectable: true, group: ScaleType.Linear,
   //   domain: ['#3893a8']
@@ -48,24 +49,18 @@ export class BatteryComponent implements OnInit {
   //     '#365480'
   //   ]
   // };
-  cardColor: string = '#383b45';
+  pieChartData: ChartConfiguration['data'] = {
+    datasets: [],
+    labels: []
+  };
+  pieChartType: ChartType = 'pie';
 
   values: any[] = [];
   batteryChargingPowerValues: any [] = []
-  legend: boolean = false;
   animations: boolean = true;
-  xAxis: boolean = false;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  yAxisStateLabel: string = 'Akkustand in %';
-  yAxisPowerLabel: string = 'Ladeleistung in W';
-  yAxisConsumptionLabel: string = 'Verbrauch in W';
-  timeline: boolean = true;
   latestValue: ModbusValueContainer | undefined;
-  batteryInfos: BatteryInfoContainer | undefined;
   batteryInfoValues: any [] = [];
   consumptionValues: any [] = [];
-  legendPosition: string = 'below';
 
   constructor(
     private valueService: ValueService,
@@ -115,15 +110,27 @@ export class BatteryComponent implements OnInit {
   }
 
   setBatteryInformations() {
+
     if (this.latestValue) {
-      this.batteryInfoValues =
+
+      let labels: Array<string> =
         [
-          {name: "" + this.latestValue.batteryChargingState + " % voll", value: this.latestValue.batteryChargingState},
-          {
-            name: "" + (100 - this.latestValue.batteryChargingState) + " % leer",
-            value: (100 - this.latestValue.batteryChargingState)
-          }
+          "" + this.latestValue.batteryChargingState + " % voll",
+          "" + (100 - this.latestValue.batteryChargingState) + " % leer"
+        ];
+      let data: { data: Array<number>, backgroundColor: Array<string>} = {
+        data: [
+          this.latestValue.batteryChargingState,
+          (100 - this.latestValue.batteryChargingState)
+        ],
+        backgroundColor: [
+          '#4cf394',
+          '#365480'
         ]
+      }
+
+      this.pieChartData.datasets.push(data);
+      this.pieChartData.labels = [...labels];
     }
   }
 

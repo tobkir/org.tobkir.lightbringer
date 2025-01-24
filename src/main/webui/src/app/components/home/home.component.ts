@@ -67,7 +67,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         labels: pieLables,
         datasets: [
           {
-            data: [entry.consumptionFromPV, entry.consumptionFromBattery, entry.consumptionFromGrid]
+            data: [entry.consumptionFromPV, entry.consumptionFromBattery, entry.consumptionFromGrid],
+            backgroundColor: ['rgba(37,228,177,0.55)','rgba(55,128,111,0.55)','rgba(56,147,168,0.55)'],
+            hoverBackgroundColor: ['rgba(37,228,177,0.75)','rgba(55,128,111,0.75)','rgba(56,147,168,0.75)']
           }
         ]
       }

@@ -20,9 +20,7 @@
             "allowedCommonJsDependencies": [
               "lodash"
             ],
-            "outputPath": {
-              "base": "dist/lightbringer"
-            },
+            "outputPath": "dist/lightbringer",
             "index": "src/index.html",
             "polyfills": [
               "zone.js"

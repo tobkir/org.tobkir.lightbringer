@@ -2,12 +2,12 @@
   <div class="row">
     <div class="card-container">
       <mat-card>
-        <mat-calendar-header>
+        <mat-card-header>
           <mat-icon matCardAvatar>battery_full</mat-icon>
           <mat-card-title style="text-align: center">
             Akkustand
           </mat-card-title>
-        </mat-calendar-header>
+        </mat-card-header>
         <mat-card-content>
           <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
 <!--          <ngx-charts-area-chart-->
@@ -33,12 +33,12 @@
     </div>
     <div class="card-container">
       <mat-card>
-        <mat-calendar-header>
+        <mat-card-header>
           <mat-icon matCardAvatar>battery_charging_full</mat-icon>
           <mat-card-title style="text-align: center">
             Ladeleistung
           </mat-card-title>
-        </mat-calendar-header>
+        </mat-card-header>
         <mat-card-content>
           <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
 <!--          <ngx-charts-area-chart-->
@@ -64,12 +64,12 @@
     </div>
     <div class="card-container">
       <mat-card>
-        <mat-calendar-header>
+        <mat-card-header>
           <mat-icon matCardAvatar>show_chart</mat-icon>
           <mat-card-title style="text-align: center">
             Verbrauch aus Speicher
           </mat-card-title>
-        </mat-calendar-header>
+        </mat-card-header>
         <mat-card-content>
           <mat-spinner *ngIf="consumptionValues.length < 1" mode="indeterminate"></mat-spinner>
 <!--          <ngx-charts-area-chart-->
@@ -97,41 +97,32 @@
   <div class="row">
     <div class="card-container">
       <mat-card>
-        <mat-calendar-header>
+        <mat-card-header>
           <mat-icon matCardAvatar>battery_unknown</mat-icon>
           <mat-card-title style="text-align: center">
             Aktueller Akkustand
           </mat-card-title>
-        </mat-calendar-header>
+        </mat-card-header>
         <mat-card-content>
-          <mat-spinner *ngIf="batteryInfoValues.length < 1" mode="indeterminate"></mat-spinner>
-          <div style="height: 100%; width: 100%">
-<!--            <ngx-charts-pie-chart-->
-<!--              *ngIf="batteryInfoValues.length >= 1"-->
-<!--              style="height: 100%; width: 100%"-->
-<!--              [results]="batteryInfoValues"-->
-<!--              [activeEntries]="batteryInfoValues"-->
-<!--              [scheme]="stateColorScheme"-->
-<!--              [labels]="true"-->
-<!--              [legend]="false"-->
-<!--              [gradient]="true"-->
-<!--              [legendTitle]="''"-->
-<!--              [legendPosition]="LegendPosition.Below"-->
-<!--              [doughnut]="false"-->
-<!--            >-->
-<!--            </ngx-charts-pie-chart>-->
-          </div>
+          <mat-spinner *ngIf="pieChartData.datasets.length < 1" mode="indeterminate"></mat-spinner>
+          <canvas *ngIf="pieChartData.datasets.length > 0"
+            baseChart
+            [data]="pieChartData"
+            [type]="pieChartType"
+            [options]="pieChartOptions"
+          >
+          </canvas>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="card-container">
       <mat-card>
-        <mat-calendar-header>
+        <mat-card-header>
           <mat-icon matCardAvatar>information</mat-icon>
           <mat-card-title style="text-align: center">
             Informationen
           </mat-card-title>
-        </mat-calendar-header>
+        </mat-card-header>
         <mat-spinner *ngIf="!latestValue" mode="indeterminate"></mat-spinner>
         <mat-card-content *ngIf="latestValue">
           <p [ngStyle]="{color: latestValue.batteryChargingPower < 0 ? '#a83849':'#4cf394' }">Aktuelle Ladeleistung:

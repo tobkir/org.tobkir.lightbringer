@@ -6,12 +6,12 @@ import {PvComponent} from "./components/pv/pv.component";
 import {ConsumptionComponent} from "./components/consumption/consumption.component";
 
 const routes: Routes = [
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
   {path:"", component: HomeComponent},
   {path:"home", component: HomeComponent},
   {path:"battery", component: BatteryComponent},
   {path:"pv", component: PvComponent},
-  {path:"consumption", component: ConsumptionComponent}
+  {path:"consumption", component: ConsumptionComponent},
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({

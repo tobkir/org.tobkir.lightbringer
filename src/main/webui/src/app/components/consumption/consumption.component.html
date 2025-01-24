@@ -9,26 +9,18 @@
             Hausverbrauch
           </mat-card-title>
           <mat-card-subtitle>
-            {{startOfDay | date:'dd.MM.yyyy hh:mm a'}} - {{endOfDay | date:'dd.MM.yyyy hh:mm a'}}
+            <small>{{startOfDay | date:'dd.MM.yyyy hh:mm a'}} - {{endOfDay | date:'dd.MM.yyyy hh:mm a'}}</small>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <mat-spinner color="secondary" mode="indeterminate" *ngIf="values.length < 1">
+          <mat-spinner color="secondary" mode="indeterminate" *ngIf="lineChartData.datasets.length < 1">
           </mat-spinner>
-<!--          <ngx-charts-area-chart-->
-<!--            *ngIf="values.length >=1"-->
-<!--            [scheme]="colorSchemeConsumption"-->
-<!--            [legend]="false"-->
-<!--            [showYAxisLabel]="showYAxisLabel"-->
-<!--            [xAxis]="xAxis"-->
-<!--            [yAxis]="yAxis"-->
-<!--            [yAxisLabel]="yAxisLabelConsumption"-->
-<!--            [timeline]="timeline"-->
-<!--            [results]="values"-->
-<!--            [activeEntries]="values"-->
-<!--            [gradient]="true"-->
-<!--          >-->
-<!--          </ngx-charts-area-chart>-->
+          <canvas *ngIf="lineChartData.datasets.length > 0"
+            baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="lineChartChartType"
+          ></canvas>
         </mat-card-content>
       </mat-card>
     </div>
