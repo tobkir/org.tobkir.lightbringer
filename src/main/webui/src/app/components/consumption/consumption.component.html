@@ -15,20 +15,20 @@
         <mat-card-content>
           <mat-spinner color="secondary" mode="indeterminate" *ngIf="values.length < 1">
           </mat-spinner>
-          <ngx-charts-area-chart
-            *ngIf="values.length >=1"
-            [scheme]="colorSchemeConsumption"
-            [legend]="false"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [yAxisLabel]="yAxisLabelConsumption"
-            [timeline]="timeline"
-            [results]="values"
-            [activeEntries]="values"
-            [gradient]="true"
-          >
-          </ngx-charts-area-chart>
+<!--          <ngx-charts-area-chart-->
+<!--            *ngIf="values.length >=1"-->
+<!--            [scheme]="colorSchemeConsumption"-->
+<!--            [legend]="false"-->
+<!--            [showYAxisLabel]="showYAxisLabel"-->
+<!--            [xAxis]="xAxis"-->
+<!--            [yAxis]="yAxis"-->
+<!--            [yAxisLabel]="yAxisLabelConsumption"-->
+<!--            [timeline]="timeline"-->
+<!--            [results]="values"-->
+<!--            [activeEntries]="values"-->
+<!--            [gradient]="true"-->
+<!--          >-->
+<!--          </ngx-charts-area-chart>-->
         </mat-card-content>
       </mat-card>
     </div>

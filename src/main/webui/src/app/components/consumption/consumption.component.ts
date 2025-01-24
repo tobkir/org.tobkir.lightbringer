@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueService} from "../../services/logic/value.service";
-import {AreaChartModule, Color, ScaleType} from "@swimlane/ngx-charts";
+// import {AreaChartModule, Color, ScaleType} from "@swimlane/ngx-charts";
 import {FlexModule} from "@angular/flex-layout";
 import {
   MatCard,
@@ -13,29 +13,28 @@ import {
 import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {DatePipe, NgIf} from "@angular/common";
-import {PvState} from "../../model/pv-state.model";
 import {ConsumptionState} from "../../model/consumption-state.model";
 
 @Component({
-    selector: 'app-consumption',
-    imports: [
-        AreaChartModule,
-        FlexModule,
-        MatCard,
-        MatCardContent,
-        MatCardTitle,
-        MatIcon,
-        MatProgressSpinner,
-        NgIf,
-        MatCardHeader,
-        MatCardSubtitle,
-        MatCardAvatar,
-        DatePipe
-    ],
-    templateUrl: './consumption.component.html',
-    styleUrl: './consumption.component.scss'
+  selector: 'app-consumption',
+  standalone: true,
+  imports: [
+    FlexModule,
+    MatCard,
+    MatCardContent,
+    MatCardTitle,
+    MatIcon,
+    MatProgressSpinner,
+    NgIf,
+    MatCardHeader,
+    MatCardSubtitle,
+    MatCardAvatar,
+    DatePipe
+  ],
+  templateUrl: './consumption.component.html',
+  styleUrl: './consumption.component.scss'
 })
-export class ConsumptionComponent implements OnInit{
+export class ConsumptionComponent implements OnInit {
   //TODO Config mit Constructor
   animations: boolean = true;
   xAxis: boolean = false;
@@ -47,10 +46,10 @@ export class ConsumptionComponent implements OnInit{
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
   endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
 
-  colorSchemeConsumption: Color = {
-    name: "consumption", selectable: true, group: ScaleType.Linear,
-    domain: ['#a83849', '#4cf394']
-  };
+  // colorSchemeConsumption: Color = {
+  //   name: "consumption", selectable: true, group: ScaleType.Linear,
+  //   domain: ['#a83849', '#4cf394']
+  // };
   values: any[] = [];
 
   constructor(private valueService: ValueService) {

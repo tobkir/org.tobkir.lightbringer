@@ -6,15 +6,15 @@ import {BrowserAnimationsModule, provideAnimations} from '@angular/platform-brow
 import {AppRoutingModule} from './app/app-routing.module';
 import {bootstrapApplication, BrowserModule} from '@angular/platform-browser';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {NgxChartsModule} from "@swimlane/ngx-charts";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, BrowserAnimationsModule, AppRoutingModule, FormsModule, ReactiveFormsModule, NgxChartsModule),
+    importProvidersFrom(BrowserModule, BrowserAnimationsModule, AppRoutingModule, FormsModule, ReactiveFormsModule),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations(), provideAnimationsAsync()
+    provideAnimations(), provideAnimationsAsync(), provideCharts(withDefaultRegisterables())
   ]
 })
   .catch(err => console.error(err));

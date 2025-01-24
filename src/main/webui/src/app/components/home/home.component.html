@@ -2,17 +2,24 @@
   <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
   <ng-container *ngIf="values.length > 0" style="text-align: center">
     <div class="container" style="height: 40vh; width: 85vw">
-      <ngx-charts-number-card *ngIf="values.length > 0"
-                              [results]="values"
-                              [scheme]="colorScheme"
-                              [cardColor]="cardColor">
-      </ngx-charts-number-card>
-      <ngx-charts-pie-grid *ngIf="values.length > 0"
-                           [results]="pieValues"
-                           [scheme]="colorScheme"
-                           [animations]="false"
+      <!--      <ngx-charts-number-card *ngIf="values.length > 0"-->
+      <!--                              [results]="values"-->
+      <!--                              [scheme]="colorScheme"-->
+      <!--                              [cardColor]="cardColor">-->
+      <!--      </ngx-charts-number-card>-->
+      <!--      <ngx-charts-pie-grid *ngIf="values.length > 0"-->
+      <!--                           [results]="pieValues"-->
+      <!--                           [scheme]="colorScheme"-->
+      <!--                           [animations]="false"-->
+      <!--      >-->
+      <!--      </ngx-charts-pie-grid>-->
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [legend]="pieAreaLegend"
+        [type]="polarAreaChartType"
       >
-      </ngx-charts-pie-grid>
+      </canvas>
     </div>
   </ng-container>
 </div>

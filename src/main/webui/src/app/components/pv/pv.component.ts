@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AreaChartModule, Color, NumberCardModule, ScaleType} from "@swimlane/ngx-charts";
+// import {AreaChartModule, Color, NumberCardModule, ScaleType} from "@swimlane/ngx-charts";
 import {ValueService} from "../../services/logic/value.service";
 import {PvState} from "../../model/pv-state.model";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
@@ -14,7 +14,6 @@ import {MathService} from "../../services/utils/math.service";
 @Component({
     selector: 'app-pv',
     imports: [
-        AreaChartModule,
         MatProgressSpinner,
         NgIf,
         FlexLayoutModule,
@@ -22,12 +21,12 @@ import {MathService} from "../../services/utils/math.service";
         MatCardTitle,
         MatCardContent,
         MatIcon,
-        NumberCardModule,
         MatCardAvatar,
         MatCardHeader
     ],
     templateUrl: './pv.component.html',
-    styleUrl: './pv.component.scss'
+    styleUrl: './pv.component.scss',
+    standalone: true,
 })
 export class PvComponent implements OnInit, OnDestroy {
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
@@ -35,14 +34,14 @@ export class PvComponent implements OnInit, OnDestroy {
   requestInterval: any;
   consumptionInterval: any;
   statisticInterval: any;
-  colorScheme: Color = {
-    name: "test", selectable: true, group: ScaleType.Linear,
-    domain: ['#4cf394', '#3893a8']
-  };
-  colorSchemeConsumption: Color = {
-    name: "consumption", selectable: true, group: ScaleType.Linear,
-    domain: ['#a83849', '#4cf394']
-  };
+  // colorScheme: Color = {
+  //   name: "test", selectable: true, group: ScaleType.Linear,
+  //   domain: ['#4cf394', '#3893a8']
+  // };
+  // colorSchemeConsumption: Color = {
+  //   name: "consumption", selectable: true, group: ScaleType.Linear,
+  //   domain: ['#a83849', '#4cf394']
+  // };
   values: any[] = [];
   consumptionValues: any[] = [];
   statisticValues: ModbusValueContainer | undefined;

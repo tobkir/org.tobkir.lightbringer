@@ -1,13 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgClass, NgIf, NgStyle} from "@angular/common";
-import {
-  AreaChartModule,
-  Color,
-  LegendPosition,
-  NumberCardModule,
-  PieChartModule,
-  ScaleType
-} from "@swimlane/ngx-charts";
+import {NgIf, NgStyle} from "@angular/common";
 import {ValueService} from "../../services/logic/value.service";
 import {BatteryState} from "../../model/battery-state.model";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -20,45 +12,42 @@ import {MathService} from "../../services/utils/math.service";
 import {MatCalendarHeader} from "@angular/material/datepicker";
 
 @Component({
-    selector: 'app-battery',
-    imports: [
-        NgIf,
-        AreaChartModule,
-        MatProgressSpinnerModule,
-        MatCard,
-        MatCardTitle,
-        MatCardContent,
-        MatIcon,
-        FlexModule,
-        NumberCardModule,
-        NgStyle,
-        NgClass,
-        PieChartModule,
-        MatCalendarHeader,
-        MatCardAvatar
-    ],
-    templateUrl: './battery.component.html',
-    styleUrl: './battery.component.scss'
+  selector: 'app-battery',
+  imports: [
+    NgIf,
+    MatProgressSpinnerModule,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    MatIcon,
+    FlexModule,
+    NgStyle,
+    MatCalendarHeader,
+    MatCardAvatar
+  ],
+  standalone: true,
+  templateUrl: './battery.component.html',
+  styleUrl: './battery.component.scss'
 })
 export class BatteryComponent implements OnInit {
   startOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
   endOfDay = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
   requestBatteryStateInterval: any;
-  powerColorScheme: Color = {
-    name: "power", selectable: true, group: ScaleType.Linear,
-    domain: ['#3893a8']
-  };
-  consumptionColorScheme: Color = {
-    name: "power", selectable: true, group: ScaleType.Linear,
-    domain: ['#a83849']
-  };
-  stateColorScheme: Color = {
-    name: "state", selectable: true, group: ScaleType.Linear,
-    domain: [
-      '#4cf394',
-      '#365480'
-    ]
-  };
+  // powerColorScheme: Color = {
+  //   name: "power", selectable: true, group: ScaleType.Linear,
+  //   domain: ['#3893a8']
+  // };
+  // consumptionColorScheme: Color = {
+  //   name: "power", selectable: true, group: ScaleType.Linear,
+  //   domain: ['#a83849']
+  // };
+  // stateColorScheme: Color = {
+  //   name: "state", selectable: true, group: ScaleType.Linear,
+  //   domain: [
+  //     '#4cf394',
+  //     '#365480'
+  //   ]
+  // };
   cardColor: string = '#383b45';
 
   values: any[] = [];
@@ -126,11 +115,14 @@ export class BatteryComponent implements OnInit {
   }
 
   setBatteryInformations() {
-    if(this.latestValue) {
+    if (this.latestValue) {
       this.batteryInfoValues =
         [
           {name: "" + this.latestValue.batteryChargingState + " % voll", value: this.latestValue.batteryChargingState},
-          {name: "" + (100 - this.latestValue.batteryChargingState) + " % leer", value: (100 - this.latestValue.batteryChargingState)}
+          {
+            name: "" + (100 - this.latestValue.batteryChargingState) + " % leer",
+            value: (100 - this.latestValue.batteryChargingState)
+          }
         ]
     }
   }
@@ -150,7 +142,7 @@ export class BatteryComponent implements OnInit {
       series.push(
         {
           name: entry.timestamp,
-          value: !entry.batteryChargingPower || entry.batteryChargingPower<0 ? 0 : entry.batteryChargingPower
+          value: !entry.batteryChargingPower || entry.batteryChargingPower < 0 ? 0 : entry.batteryChargingPower
         }
       )
     })
@@ -176,5 +168,4 @@ export class BatteryComponent implements OnInit {
     clearInterval(this.requestBatteryStateInterval);
   }
 
-  protected readonly LegendPosition = LegendPosition;
 }

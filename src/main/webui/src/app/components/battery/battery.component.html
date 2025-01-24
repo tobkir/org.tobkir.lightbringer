@@ -10,24 +10,24 @@
         </mat-calendar-header>
         <mat-card-content>
           <mat-spinner *ngIf="values.length < 1" mode="indeterminate"></mat-spinner>
-          <ngx-charts-area-chart
-            *ngIf="values.length >=1"
-            [scheme]="stateColorScheme"
-            [legend]="legend"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [yAxisLabel]="yAxisStateLabel"
-            [timeline]="timeline"
-            [results]="values"
-            [activeEntries]="values"
-            [animations]="animations"
-            [gradient]="true"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-          >
-          </ngx-charts-area-chart>
+<!--          <ngx-charts-area-chart-->
+<!--            *ngIf="values.length >=1"-->
+<!--            [scheme]="stateColorScheme"-->
+<!--            [legend]="legend"-->
+<!--            [showYAxisLabel]="showYAxisLabel"-->
+<!--            [xAxis]="xAxis"-->
+<!--            [yAxis]="yAxis"-->
+<!--            [yAxisLabel]="yAxisStateLabel"-->
+<!--            [timeline]="timeline"-->
+<!--            [results]="values"-->
+<!--            [activeEntries]="values"-->
+<!--            [animations]="animations"-->
+<!--            [gradient]="true"-->
+<!--            (select)="onSelect($event)"-->
+<!--            (activate)="onActivate($event)"-->
+<!--            (deactivate)="onDeactivate($event)"-->
+<!--          >-->
+<!--          </ngx-charts-area-chart>-->
         </mat-card-content>
       </mat-card>
     </div>
@@ -41,24 +41,24 @@
         </mat-calendar-header>
         <mat-card-content>
           <mat-spinner *ngIf="batteryChargingPowerValues.length < 1" mode="indeterminate"></mat-spinner>
-          <ngx-charts-area-chart
-            *ngIf="batteryChargingPowerValues.length >=1"
-            [scheme]="powerColorScheme"
-            [legend]="legend"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [yAxisLabel]="yAxisPowerLabel"
-            [timeline]="timeline"
-            [results]="batteryChargingPowerValues"
-            [activeEntries]="batteryChargingPowerValues"
-            [animations]="animations"
-            [gradient]="true"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-          >
-          </ngx-charts-area-chart>
+<!--          <ngx-charts-area-chart-->
+<!--            *ngIf="batteryChargingPowerValues.length >=1"-->
+<!--            [scheme]="powerColorScheme"-->
+<!--            [legend]="legend"-->
+<!--            [showYAxisLabel]="showYAxisLabel"-->
+<!--            [xAxis]="xAxis"-->
+<!--            [yAxis]="yAxis"-->
+<!--            [yAxisLabel]="yAxisPowerLabel"-->
+<!--            [timeline]="timeline"-->
+<!--            [results]="batteryChargingPowerValues"-->
+<!--            [activeEntries]="batteryChargingPowerValues"-->
+<!--            [animations]="animations"-->
+<!--            [gradient]="true"-->
+<!--            (select)="onSelect($event)"-->
+<!--            (activate)="onActivate($event)"-->
+<!--            (deactivate)="onDeactivate($event)"-->
+<!--          >-->
+<!--          </ngx-charts-area-chart>-->
         </mat-card-content>
       </mat-card>
     </div>
@@ -72,24 +72,24 @@
         </mat-calendar-header>
         <mat-card-content>
           <mat-spinner *ngIf="consumptionValues.length < 1" mode="indeterminate"></mat-spinner>
-          <ngx-charts-area-chart
-            *ngIf="consumptionValues.length >=1"
-            [scheme]="consumptionColorScheme"
-            [legend]="legend"
-            [showYAxisLabel]="true"
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [yAxisLabel]="yAxisConsumptionLabel"
-            [timeline]="timeline"
-            [results]="consumptionValues"
-            [activeEntries]="consumptionValues"
-            [animations]="animations"
-            [gradient]="true"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-          >
-          </ngx-charts-area-chart>
+<!--          <ngx-charts-area-chart-->
+<!--            *ngIf="consumptionValues.length >=1"-->
+<!--            [scheme]="consumptionColorScheme"-->
+<!--            [legend]="legend"-->
+<!--            [showYAxisLabel]="true"-->
+<!--            [xAxis]="xAxis"-->
+<!--            [yAxis]="yAxis"-->
+<!--            [yAxisLabel]="yAxisConsumptionLabel"-->
+<!--            [timeline]="timeline"-->
+<!--            [results]="consumptionValues"-->
+<!--            [activeEntries]="consumptionValues"-->
+<!--            [animations]="animations"-->
+<!--            [gradient]="true"-->
+<!--            (select)="onSelect($event)"-->
+<!--            (activate)="onActivate($event)"-->
+<!--            (deactivate)="onDeactivate($event)"-->
+<!--          >-->
+<!--          </ngx-charts-area-chart>-->
         </mat-card-content>
       </mat-card>
     </div>
@@ -106,20 +106,20 @@
         <mat-card-content>
           <mat-spinner *ngIf="batteryInfoValues.length < 1" mode="indeterminate"></mat-spinner>
           <div style="height: 100%; width: 100%">
-            <ngx-charts-pie-chart
-              *ngIf="batteryInfoValues.length >= 1"
-              style="height: 100%; width: 100%"
-              [results]="batteryInfoValues"
-              [activeEntries]="batteryInfoValues"
-              [scheme]="stateColorScheme"
-              [labels]="true"
-              [legend]="false"
-              [gradient]="true"
-              [legendTitle]="''"
-              [legendPosition]="LegendPosition.Below"
-              [doughnut]="false"
-            >
-            </ngx-charts-pie-chart>
+<!--            <ngx-charts-pie-chart-->
+<!--              *ngIf="batteryInfoValues.length >= 1"-->
+<!--              style="height: 100%; width: 100%"-->
+<!--              [results]="batteryInfoValues"-->
+<!--              [activeEntries]="batteryInfoValues"-->
+<!--              [scheme]="stateColorScheme"-->
+<!--              [labels]="true"-->
+<!--              [legend]="false"-->
+<!--              [gradient]="true"-->
+<!--              [legendTitle]="''"-->
+<!--              [legendPosition]="LegendPosition.Below"-->
+<!--              [doughnut]="false"-->
+<!--            >-->
+<!--            </ngx-charts-pie-chart>-->
           </div>
         </mat-card-content>
       </mat-card>
